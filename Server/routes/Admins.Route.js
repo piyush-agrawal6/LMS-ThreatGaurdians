@@ -33,6 +33,9 @@ router.post("/login", async (req, res) => {
   try {
     const admin = await AdminModel.find({ email, password });
     if (admin.length > 0) {
+      if (admin[0].access == false) {
+        return res.send({ message: "Do don,t have the access." });
+      }
       // bcrypt.compare(password, admin[0].password, (err, results) => {
       //   if (results) {
       let token = jwt.sign(

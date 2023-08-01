@@ -25,16 +25,16 @@ const Navbar = ({ children }) => {
   //Sidebar toggle state
   const [toggle, setToggle] = useState(true);
   const menuData = [
-    { icon: <HiOutlineHome />, title: "Dashboards" },
-    { icon: <TbLayoutGridAdd />, title: "Widgets" },
-    { icon: <BiLayout />, title: "Page Layout" },
-    { icon: <LuCircleDot />, title: "Project" },
-    { icon: <LuFile />, title: "File Manager" },
-    { icon: <TbCube />, title: "Kanban Board" },
-    { icon: <PiBasket />, title: "E-commerce" },
-    { icon: <GoMail />, title: "Letterbox" },
-    { icon: <TbMessages />, title: "Chat" },
-    { icon: <TbUsers />, title: "Users" },
+    { icon: <HiOutlineHome />, title: "Dashboard" },
+    { icon: <TbLayoutGridAdd />, title: "profile" },
+    { icon: <TbLayoutGridAdd />, title: "Admins" },
+    { icon: <TbLayoutGridAdd />, title: "Tutors" },
+    { icon: <TbLayoutGridAdd />, title: "Students" },
+    { icon: <TbLayoutGridAdd />, title: "Contents" },
+    { icon: <TbLayoutGridAdd />, title: "Quizzes" },
+    { icon: <GoMail />, title: "Doubts" },
+    { icon: <TbMessages />, title: "Message" },
+    { icon: <TbUsers />, title: "Leader Board" },
     { icon: <BiHeart />, title: "Bookmarks" },
     { icon: <BiLogOut />, title: "Logout" },
   ];

@@ -14,6 +14,10 @@ const adminSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  access: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const AdminModel = mongoose.model("admin", adminSchema);

@@ -14,6 +14,10 @@ const studentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  access: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const StudentModel = mongoose.model("student", studentSchema);
