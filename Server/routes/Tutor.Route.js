@@ -9,8 +9,8 @@ router.post("/login", async (req, res) => {
   try {
     const admin = await TutorModel.find({ email });
     if (admin.length > 0) {
-      // bcrypt.compare(password, admin[0].password, (err, results) => {
-      //   if (results) {
+      bcrypt.compare(password, admin[0].password, (err, results) => {
+        if (results) {
       let token = jwt.sign(
         { email, name: admin[0].name },
         process.env.secret_key,
@@ -21,10 +21,10 @@ router.post("/login", async (req, res) => {
         user: admin[0],
         token,
       });
-      //   } else {
-      //     res.status(201).send({ message: "Wrong credentials" });
-      //   }
-      // });
+        } else {
+          res.status(201).send({ message: "Wrong credentials" });
+        }
+      });
     } else {
       res.send("Wrong credentials");
     }
