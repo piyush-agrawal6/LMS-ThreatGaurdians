@@ -1,5 +1,5 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 //Component imports
 import Navbar from "../../Components/Sidebar/Navbar";
 
@@ -47,6 +47,7 @@ import demo from "../../Assets/cartoon.svg";
 import { barData, lineData, pieData, COLORS } from "../../data.js";
 import FloatDiv from "../../Components/FloatDiv/FloatDiv";
 import SalesDiv from "../../Components/SalesDiv/SalesDiv";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Home = () => {
   const overviewData = [
@@ -57,6 +58,15 @@ const Home = () => {
     { icon: <BsClipboardMinus />, title: "Purchase rate", number: "5,700" },
     { icon: <AiOutlineLineChart />, title: "Profit", number: "690k" },
   ];
+  const {
+    data: { isAuthenticated },
+  } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return navigate("/");
+    }
+  }, []);
 
   return (
     <div>
