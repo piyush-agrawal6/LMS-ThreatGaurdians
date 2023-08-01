@@ -29,29 +29,28 @@ const router = express.Router();
 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password, process.env.secret_key);
   try {
-    const admin = await AdminModel.find({ email, password });
+    const admin = await AdminModel.find({ email });
     if (admin.length > 0) {
       if (admin[0].access == false) {
         return res.send({ message: "Do don,t have the access." });
       }
-      // bcrypt.compare(password, admin[0].password, (err, results) => {
-      //   if (results) {
-      let token = jwt.sign(
-        { email, name: admin[0].name },
-        process.env.secret_key,
-        { expiresIn: "7d" }
-      );
-      res.send({
-        message: "Login Successful",
-        user: admin[0],
-        token,
+      bcrypt.compare(password, admin[0].password, (err, results) => {
+        if (results) {
+          let token = jwt.sign(
+            { email, name: admin[0].name },
+            process.env.secret_key,
+            { expiresIn: "7d" }
+          );
+          res.send({
+            message: "Login Successful",
+            user: admin[0],
+            token,
+          });
+        } else {
+          res.status(201).send({ message: "Wrong credentials" });
+        }
       });
-      //   } else {
-      //     res.status(201).send({ message: "Wrong credentials" });
-      //   }
-      // });
     } else {
       res.send("Wrong credentials");
     }

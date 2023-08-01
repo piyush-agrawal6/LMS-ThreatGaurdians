@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const admin = await TutorModel.find({ email, password });
+    const admin = await TutorModel.find({ email });
     if (admin.length > 0) {
       // bcrypt.compare(password, admin[0].password, (err, results) => {
       //   if (results) {

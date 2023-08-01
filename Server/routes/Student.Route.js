@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
-    const admin = await StudentModel.find({ email, password });
+    const admin = await StudentModel.find({ email });
     if (admin.length > 0) {
       let token = jwt.sign(
         { email, name: admin[0].name },
