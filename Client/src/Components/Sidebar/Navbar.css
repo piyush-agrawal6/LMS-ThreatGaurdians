@@ -1,0 +1,238 @@
+
+/* SIDEBAR */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: white;
+  z-index: 2000;
+  font-family: var(--lato);
+  transition: 0.5s ease-out;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  box-shadow: rgba(151, 170, 210, 0.2) 0px 7px 9px 0px;
+}
+#sidebar::--webkit-scrollbar {
+  display: none;
+}
+#sidebar.hide {
+  width: 60px;
+}
+#sidebar .logo {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  box-shadow: rgba(151, 170, 210, 0.2) 0px 7px 29px 0px;
+}
+#sidebar .side-menu {
+  width: 100%;
+  margin-top: 25px;
+}
+
+#sidebar .side-menu li:nth-child(1) {
+  background: var(--grey);
+  position: relative;
+}
+
+#sidebar .side-menu.top li:nth-child(1) a {
+  color: var(--blue);
+}
+#sidebar .side-menu.top li:last-child a {
+  color: var(--red);
+}
+
+.logoBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.menuIconHidden {
+  display: none;
+  color: black;
+}
+
+/* Top Bar */
+#content {
+  position: relative;
+  width: calc(100% - 280px);
+  left: 280px;
+  transition: 0.5s ease-out;
+}
+#sidebar.hide ~ #content {
+  width: calc(100% - 60px);
+  left: 60px;
+}
+
+/* NAVBAR */
+#content nav {
+  height: 75px;
+  background: white;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 24px;
+  box-shadow: rgba(151, 170, 210, 0.2) 0px 7px 29px 0px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+#content nav > div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+#content nav a {
+  color: var(--dark);
+}
+#content nav .menuIcon {
+  cursor: pointer;
+  color: var(--dark);
+  font-size: 22px;
+}
+#content nav .menuIcon:hover {
+  color: var(--blue);
+}
+#content nav .nav-link {
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+#content nav .nav-link:hover {
+  color: var(--blue);
+}
+#content nav .nav-link span {
+  color: var(--blue);
+}
+#content nav .navIcon {
+  display: flex;
+  align-items: center;
+  font-size: 22px;
+}
+#content nav .lang {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+#content nav .lang svg {
+  font-size: 24px;
+}
+
+#content nav .number {
+  position: absolute;
+  top: 15px;
+  right: 170px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--light);
+  color: var(--light);
+  font-weight: 600;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#content nav .notification .num {
+  background: rgb(247, 39, 39);
+}
+#content nav .cart .numCart {
+  background: rgb(1, 172, 1);
+}
+
+#content nav .profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+#content nav .profile p:nth-child(1) {
+  font-size: 14px;
+  font-weight: 600;
+}
+#content nav .profile p:nth-child(2) {
+  font-size: 12px;
+  font-weight: 400;
+  color: gray;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+#content nav .profile img {
+  width: 33px;
+  height: 33px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+/* media queries */
+@media screen and (max-width: 768px) {
+  #sidebar {
+    width: 200px;
+  }
+
+  #content {
+    width: calc(100% - 60px);
+    left: 200px;
+  }
+
+  #content nav .nav-link {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  #content nav .nav-link {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .profile > div {
+    display: none;
+  }
+  #content nav {
+    height: 55px;
+  }
+  #content nav .menuIcon {
+    font-size: 18px;
+  }
+  #content nav .lang svg {
+    font-size: 18px;
+  }
+  #content nav .navIcon {
+    font-size: 18px;
+  }
+  #content nav .notification,
+  .cart {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #sidebar {
+    width: 100%;
+    transition: 0.2s ease-out;
+  }
+  #sidebar.hide {
+    width: 0px;
+  }
+  #content {
+    width: 0;
+    left: 100%;
+    transition: 0.2s ease-out;
+  }
+  #sidebar.hide ~ #content {
+    width: 100%;
+    left: 0px;
+  }
+  .menuIconHidden {
+    display: block;
+  }
+}
