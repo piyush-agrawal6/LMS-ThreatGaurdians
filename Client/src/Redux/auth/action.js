@@ -1,79 +1,90 @@
 import * as types from "./types";
 import axios from "axios";
 
-//send otp
-export const registerUser = (userData) => async (dispatch) => {
+//login user
+export const adminLogin = (data) => async (dispatch) => {
   try {
-    const data = await axios.post(
-      `https://outrageous-hoodie-jay.cyclic.app/user/new`,
-      userData
-    );
-    return data.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-//Register User
-export const checkOTP = (form) => async (dispatch) => {
-  try {
-    const data = await axios.post(
-      `https://outrageous-hoodie-jay.cyclic.app/user/register`,
-      form
-    );
-    if (data.data.message === "user registered successfully") {
-      dispatch({
-        type: types.REGISTER_USER_SUCCESS,
-        payload: {
-          token: data.data.token,
-          message: data.data.message,
-          user: data.data.user,
-        },
-      });
-    }
-    return data.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-//Register User by google sign in
-export const googleRegister = (form) => async (dispatch) => {
-  try {
-    const data = await axios.post(
-      `https://outrageous-hoodie-jay.cyclic.app/user/googleregister`,
-      form
-    );
-    if (data.data.message === "user registered successfully") {
-      dispatch({
-        type: types.REGISTER_USER_SUCCESS,
-        payload: {
-          token: data.data.token,
-          message: data.data.message,
-          user: data.data.user,
-        },
-      });
-    }
-    return data.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-//login
-export const authLogin = (data) => async (dispatch) => {
-  try {
+    dispatch({ type: types.LOGIN_ADMIN_REQUEST });
     const res = await axios.post(
-      "https://outrageous-hoodie-jay.cyclic.app/user/login",
+      "https://zany-gray-clam-gear.cyclic.app/nurses/login",
       data
     );
+    dispatch({
+      type: types.LOGIN_ADMIN_SUCCESS,
+      payload: {
+        message: res.data.message,
+        user: res.data.user,
+        token: res.data.token,
+      },
+    });
     return res.data;
   } catch (error) {
-    console.log(error);
+    dispatch({
+      type: types.LOGIN_ADMIN_ERROR,
+      payload: {
+        message: error,
+      },
+    });
   }
 };
 
-//logout
+//login user
+export const tutorLogin = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: types.LOGIN_TUTOR_REQUEST });
+    const res = await axios.post(
+      "https://zany-gray-clam-gear.cyclic.app/doctors/login",
+      data
+    );
+    console.log(res.data);
+    dispatch({
+      type: types.LOGIN_TUTOR_SUCCESS,
+      payload: {
+        message: res.data.message,
+        user: res.data.user,
+        token: res.data.token,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    dispatch({
+      type: types.LOGIN_TUTOR_ERROR,
+      payload: {
+        message: error,
+      },
+    });
+  }
+};
+
+//login user
+export const studentLogin = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: types.LOGIN_STUDENT_REQUEST });
+    const res = await axios.post(
+      "https://zany-gray-clam-gear.cyclic.app/admin/login",
+      data
+    );
+    console.log(res.data);
+    dispatch({
+      type: types.LOGIN_STUDENT_SUCCESS,
+      payload: {
+        message: res.data.message,
+        user: res.data.user,
+        token: res.data.token,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    dispatch({
+      type: types.LOGIN_STUDENT_ERROR,
+      payload: {
+        message: error,
+      },
+    });
+  }
+};
+
+// logout user
 export const authLogout = () => async (dispatch) => {
   try {
     dispatch({

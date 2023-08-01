@@ -3,8 +3,7 @@ import "./Login.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { message, Space, Spin } from "antd";
-import { authLogin, googleRegister } from "../../Redux/auth/action";
-import jwt_decode from "jwt-decode";
+import { adminLogin, studentLogin, tutorLogin } from "../../Redux/auth/action";
 const Login = () => {
   const [formData, setFormData] = useState({
     type: "",
@@ -21,28 +20,80 @@ const Login = () => {
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    if (formData.type === "") {
+      return messageApi.open({
+        type: "error",
+        content: "Please select user type.",
+        duration: 3,
+      });
+    }
     setLoading(true);
-    dispatch(authLogin(formData)).then((res) => {
-      if (res.message === "User does not exist") {
-        setLoading(false);
-        messageApi.open({
-          type: "info",
-          content: "User doesn't already exists , Please signup.",
-          duration: 3,
-        });
-      } else if (res.message === "error") {
-        setLoading(false);
-        messageApi.open({
-          type: "info",
-          content: "Something went wrong, please try again",
-          duration: 3,
-        });
-      } else {
-        localStorage.setItem("registerEmail", formData.email);
-        setLoading(false);
-        return navigate("/otp");
-      }
-    });
+    if (formData.type === "admin") {
+      dispatch(adminLogin(formData)).then((res) => {
+        if (res.message === "Wrong Credentials") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "Wrong Credentials !",
+            duration: 3,
+          });
+        } else if (res.message === "Error") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "Something went wrong, please try again",
+            duration: 3,
+          });
+        } else {
+          setLoading(false);
+          return navigate("/home");
+        }
+      });
+    }
+    if (formData.type === "tutor") {
+      dispatch(tutorLogin(formData)).then((res) => {
+        if (res.message === "User does not exist") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "User doesn't already exists , Please signup.",
+            duration: 3,
+          });
+        } else if (res.message === "error") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "Something went wrong, please try again",
+            duration: 3,
+          });
+        } else {
+          setLoading(false);
+          return navigate("/home");
+        }
+      });
+    }
+    if (formData.type === "student") {
+      dispatch(studentLogin(formData)).then((res) => {
+        if (res.message === "User does not exist") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "User doesn't already exists , Please signup.",
+            duration: 3,
+          });
+        } else if (res.message === "error") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "Something went wrong, please try again",
+            duration: 3,
+          });
+        } else {
+          setLoading(false);
+          return navigate("/home");
+        }
+      });
+    }
   };
 
   if (auth.data.isAuthenticated) {
@@ -63,13 +114,14 @@ const Login = () => {
           </div>
           <div>
             <form onSubmit={handleFormSubmit}>
-              <select>
-                <option>Select user type</option>
-                <option>Admin</option>
-                <option>Tutor</option>
-                <option>Student</option>
+              <select name="type" onChange={handleFormChange}>
+                <option value="">Select user type</option>
+                <option value="admin">Admin</option>
+                <option value="tutor">Tutor</option>
+                <option value="student">Student</option>
               </select>
               <input
+                required
                 name="id"
                 value={formData.id}
                 onChange={handleFormChange}
@@ -77,6 +129,7 @@ const Login = () => {
                 placeholder="Enter id"
               />
               <input
+                required
                 name="password"
                 value={formData.password}
                 onChange={handleFormChange}
@@ -88,7 +141,7 @@ const Login = () => {
               </p>
               <button type="submit">
                 {contextHolder}
-                {auth.userRegister.loading ? "Loading" : "CONTINUE"}
+                CONTINUE
               </button>
               {loading ? (
                 <Space
