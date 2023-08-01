@@ -3,6 +3,7 @@ import axios from "axios";
 
 //login user
 export const adminLogin = (data) => async (dispatch) => {
+  console.log(data);
   try {
     dispatch({ type: types.LOGIN_ADMIN_REQUEST });
     const res = await axios.post(
@@ -30,6 +31,7 @@ export const adminLogin = (data) => async (dispatch) => {
 
 //login user
 export const tutorLogin = (data) => async (dispatch) => {
+  console.log(data);
   try {
     dispatch({ type: types.LOGIN_TUTOR_REQUEST });
     const res = await axios.post(
@@ -58,6 +60,7 @@ export const tutorLogin = (data) => async (dispatch) => {
 
 //login user
 export const studentLogin = (data) => async (dispatch) => {
+  console.log(data);
   try {
     dispatch({ type: types.LOGIN_STUDENT_REQUEST });
     const res = await axios.post(

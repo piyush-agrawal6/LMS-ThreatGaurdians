@@ -7,7 +7,7 @@ import { adminLogin, studentLogin, tutorLogin } from "../../Redux/auth/action";
 const Login = () => {
   const [formData, setFormData] = useState({
     type: "",
-    id: "",
+    email: "",
     password: "",
   });
   const [messageApi, contextHolder] = message.useMessage();
@@ -122,11 +122,11 @@ const Login = () => {
               </select>
               <input
                 required
-                name="id"
+                name="email"
                 value={formData.id}
                 onChange={handleFormChange}
-                type="text"
-                placeholder="Enter id"
+                type="email"
+                placeholder="Enter email"
               />
               <input
                 required
