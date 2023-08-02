@@ -6,38 +6,66 @@ import user from "../../Assets/profile.png";
 import logo from "../../Assets/logo.png";
 
 // Icon imports
-import { BiLogOut, BiLayout, BiHeart } from "react-icons/bi";
-import { TbLayoutGridAdd, TbCube, TbMessages, TbUsers } from "react-icons/tb";
-import { LuCircleDot, LuFile, LuLayoutGrid } from "react-icons/lu";
-import { PiBasket, PiShootingStarLight, PiLightbulbThin } from "react-icons/pi";
+import { BiLogOut, BiHeart, BiUserVoice } from "react-icons/bi";
+import {
+  TbLayoutGridAdd,
+  TbMessages,
+  TbUsers,
+  TbBrandSpeedtest,
+} from "react-icons/tb";
+import { LuLayoutGrid } from "react-icons/lu";
+import { PiStudentDuotone } from "react-icons/pi";
 import { HiOutlineHome } from "react-icons/hi";
-import { CiShoppingBasket } from "react-icons/ci";
-import { BsBell } from "react-icons/bs";
-import { CiSearch } from "react-icons/ci";
-import { GoChevronDown, GoMail } from "react-icons/go";
-import { LiaFlagUsaSolid } from "react-icons/lia";
+import { BsBell, BsBookmarkCheck } from "react-icons/bs";
+import { GoChevronDown } from "react-icons/go";
+import { RiAdminLine } from "react-icons/ri";
+import { MdOutlineWorkspacePremium } from "react-icons/md";
+import { AiOutlineQuestion } from "react-icons/ai";
 
 // CSS imports
 import "./Navbar.css";
 import Menu from "../Menu/Menu";
+import { Dropdown } from "antd";
 
 const Navbar = ({ children }) => {
   //Sidebar toggle state
   const [toggle, setToggle] = useState(true);
+
+  //Sidebar menu
   const menuData = [
     { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
-    { icon: <TbLayoutGridAdd />, title: "Admins", address: "/admin" },
-    { icon: <TbLayoutGridAdd />, title: "Tutors", address: "/tutor" },
-    { icon: <TbLayoutGridAdd />, title: "Students", address: "/student" },
-    { icon: <TbLayoutGridAdd />, title: "Contents" },
-    { icon: <TbLayoutGridAdd />, title: "Quizzes" },
-    { icon: <GoMail />, title: "Doubts" },
-    { icon: <TbMessages />, title: "Message" },
-    { icon: <TbUsers />, title: "Leader Board" },
-    { icon: <BiHeart />, title: "Bookmarks" },
-    { icon: <BiLogOut />, title: "Logout" },
+    { icon: <RiAdminLine />, title: "Admins", address: "/admin" },
+    { icon: <BiUserVoice />, title: "Tutors", address: "/tutor" },
+    { icon: <PiStudentDuotone />, title: "Students", address: "/student" },
+    { icon: <TbBrandSpeedtest />, title: "Quizzes", address: "/quizzes" },
+    { icon: <TbLayoutGridAdd />, title: "Contents", address: "/contents" },
+    { icon: <AiOutlineQuestion />, title: "Doubts", address: "/doubts" },
+    { icon: <TbMessages />, title: "Message", address: "/messages" },
+    { icon: <TbUsers />, title: "Leader Board", address: "/leaderboard" },
+    { icon: <BsBookmarkCheck />, title: "Bookmarks", address: "/bookmarks" },
+    {
+      icon: <MdOutlineWorkspacePremium />,
+      title: "Premium",
+      address: "/premium",
+    },
+    { icon: <BiLogOut />, title: "Logout", address: "/" },
   ];
 
+  // Dropdown menu
+  const items = [
+    {
+      key: "2",
+      label: <Link>Buy Premium</Link>,
+    },
+    {
+      key: "3",
+      label: <Link>Change Password</Link>,
+    },
+    {
+      key: "1",
+      label: <span>Logout</span>,
+    },
+  ];
   return (
     <>
       {/* Side Bar */}
@@ -77,39 +105,25 @@ const Navbar = ({ children }) => {
               onClick={() => setToggle(!toggle)}
             />
             <Link href="/" className="nav-link">
-              🔥 Something you love is now on sale ! <span>Buy now !</span>
+              🔥 Access all features with premium ! <span>Buy now !</span>
             </Link>
           </div>
           <div>
-            <Link href="/" className="lang">
-              <LiaFlagUsaSolid /> EN
-            </Link>
-            <Link href="/" className="navIcon">
-              <CiSearch />
-            </Link>
-            <Link href="/" className="navIcon">
-              <PiShootingStarLight />
-            </Link>
-            <Link href="/" className="navIcon">
-              <PiLightbulbThin />
-            </Link>
-            <Link href="/" className="cart">
-              <CiShoppingBasket />
-              <span className="numCart number">2</span>
-            </Link>
             <Link href="/" className="notification">
               <BsBell />
               <span className="num number">4</span>
             </Link>
-            <Link href="/" className="profile">
-              <img src={user} />
-              <div>
-                <p>Emay Walter</p>
-                <p>
-                  Admin <GoChevronDown />
-                </p>
-              </div>
-            </Link>
+            <Dropdown menu={{ items }} placement="bottomLeft" arrow>
+              <Link href="/" className="profile">
+                <img src={user} />
+                <div>
+                  <p>Emay Walter</p>
+                  <p>
+                    Admin <GoChevronDown />
+                  </p>
+                </div>
+              </Link>
+            </Dropdown>
           </div>
         </nav>
         {children}

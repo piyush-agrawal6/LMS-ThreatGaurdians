@@ -1,0 +1,37 @@
+.head-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 16px;
+  padding: 18px 25px;
+  box-shadow: rgba(184, 184, 184, 0.1) 0px 4px 4px;
+}
+.head-left {
+  font-size: 24px;
+  font-weight: 500;
+}
+.head-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: gray;
+}
+.head-right span {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+@media screen and (max-width: 768px) {
+  .head-title {
+    grid-gap: 10px;
+    padding: 10px 20px;
+  }
+  .head-left {
+    font-size: 20px;
+  }
+  .head-right {
+    gap: 6px;
+    font-size: 13px;
+  }
+}

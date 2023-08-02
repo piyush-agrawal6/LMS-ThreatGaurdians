@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./Student.css";
 import Navbar from "../../Components/Sidebar/Navbar";
-import { BiHome } from "react-icons/bi";
 import Table from "../../Components/Table/Table";
 import AddIcon from "../../Components/AddIcon/AddIcon";
 import { Button, Drawer, Form, Input, Select, Space } from "antd";
+import Header from "../../Components/Header/Header";
 const Student = () => {
   const [open, setOpen] = useState(false);
 
@@ -19,12 +19,7 @@ const Student = () => {
   return (
     <Navbar>
       <div className="admin">
-        <div className="head-title">
-          <div className="head-left">Student Data</div>
-          <div className="head-right">
-            <BiHome /> <p>/ Dashboard</p> <span>/ Student</span>
-          </div>
-        </div>
+        <Header Title={"Student Data"} Address={"Student"} />
         <div className="adminData">
           <Table />
         </div>
@@ -52,21 +47,35 @@ const Student = () => {
               label="Name"
               rules={[{ required: true, message: "Please enter user name" }]}
             >
-              <Input required placeholder="Please enter user name" type="text" />
+              <Input
+                required
+                placeholder="Please enter user name"
+                type="text"
+              />
             </Form.Item>
             <Form.Item
               name="email"
               label="Email"
               rules={[{ required: true, message: "Please enter user email" }]}
             >
-              <Input required placeholder="Please enter user name" type="email" />
+              <Input
+                required
+                placeholder="Please enter user name"
+                type="email"
+              />
             </Form.Item>
             <Form.Item
               name="password"
               label="Password"
-              rules={[{ required: true, message: "Please enter user password" }]}
+              rules={[
+                { required: true, message: "Please enter user password" },
+              ]}
             >
-              <Input required placeholder="Please enter user name" type="password" />
+              <Input
+                required
+                placeholder="Please enter user name"
+                type="password"
+              />
             </Form.Item>
             <Form.Item
               name="access"
