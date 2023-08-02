@@ -4,23 +4,44 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 
+// **************** end points: "/tutor/register" for registering any new tutor ****************
+router.post('/register', async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    bcrypt.hash(password, +(process.env.Salt_rounds), async (err, secure_password) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const tutor = new TutorModel({ name, email, password: secure_password });
+        await tutor.save();
+        res.status(201).send({ msg: 'Tutor Registered Successfully' });
+      }
+    })
+  } catch (err) {
+    res.status(404).send({ msg: "Tutor Registation failed" });
+  }
+});
+
+// **************** end points: "/tutor/login" for Login any exsiting Tutor ****************
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
+
   try {
-    const admin = await TutorModel.find({ email });
-    if (admin.length > 0) {
-      bcrypt.compare(password, admin[0].password, (err, results) => {
+    const tutor = await TutorModel.find({ email });
+    if (tutor.length > 0) {
+      bcrypt.compare(password, tutor[0].password, (err, results) => {
         if (results) {
-      let token = jwt.sign(
-        { email, name: admin[0].name },
-        process.env.secret_key,
-        { expiresIn: "7d" }
-      );
-      res.send({
-        message: "Login Successful",
-        user: admin[0],
-        token,
-      });
+          let token = jwt.sign(
+            { email, name: tutor[0].name },
+            process.env.secret_key,
+            { expiresIn: "7d" }
+          );
+          res.send({
+            message: "Login Successful",
+            user: tutor[0],
+            token,
+          });
         } else {
           res.status(201).send({ message: "Wrong credentials" });
         }

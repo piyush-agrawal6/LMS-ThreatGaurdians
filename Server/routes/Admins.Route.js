@@ -27,6 +27,26 @@ const router = express.Router();
 //   res.send("Admin Registered Successfully");
 // });
 
+// **************** end points: "/admin/register" for registering any new admin ****************
+router.post('/register', async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    bcrypt.hash(password, +(process.env.Salt_rounds), async (err, secure_password) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const admin = new AdminModel({ name, email, password: secure_password });
+        await admin.save();
+        res.status(201).send({ msg: 'Admin Registered Successfully' });
+      }
+    })
+  } catch (err) {
+    res.status(404).send({ msg: "Admin Registation failed" });
+  }
+});
+
+// **************** end points: "/admin/login" for Login any exsiting admin ****************
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {

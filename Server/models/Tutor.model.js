@@ -19,7 +19,7 @@ const tutorSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
-});
+},{ versionKey: false, timestamps: true });
 
 const TutorModel = mongoose.model("tutor", tutorSchema);
 
