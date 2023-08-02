@@ -77,33 +77,31 @@ router.post("/login", async (req, res) => {
 //   res.send("Nurse Registered Successfully");
 // });
 
-// router.patch("/:nurseId", async (req, res) => {
-//   const id = req.params.nurseId;
-//   const payload = req.body;
-//   try {
-//     const nurse = await NurseModel.findByIdAndUpdate({ _id: id }, payload);
-//     if (!nurse) {
-//       res.status(404).send({ msg: `Nurse with id ${id} not found` });
-//     }
-//     res.status(200).send(`Nurse with id ${id} updated`);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong, unable to Update." });
-//   }
-// });
+router.patch("/:tutorId", async (req, res) => {
+  const { tutorId } = req.params;
+  const payload = req.body;
+  try {
+    const tutor = await TutorModel.findByIdAndUpdate({ _id: tutorId }, payload);
+    if (!tutor) {
+      res.status(404).send({ msg: `Tutor with id ${tutorId} not found` });
+    }
+    res.status(200).send(`Tutor with id ${tutorId} updated`);
+  } catch (error) {
+    res.status(404).send({ error: "Something went wrong, unable to Update." });
+  }
+});
 
-// router.delete("/:nurseId", async (req, res) => {
-//   const id = req.params.nurseId;
-//   try {
-//     const nurse = await NurseModel.findByIdAndDelete({ _id: id });
-//     if (!nurse) {
-//       res.status(404).send({ msg: `Nurse with id ${id} not found` });
-//     }
-//     res.status(200).send(`Nurse with id ${id} deleted`);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong, unable to Delete." });
-//   }
-// });
+router.delete("/:tutorId", async (req, res) => {
+  const { tutorId } = req.params;
+  try {
+    const tutor = await TutorModel.findByIdAndDelete({ _id: tutorId });
+    if (!tutor) {
+      res.status(404).send({ msg: `Tutor with id ${tutorId} not found` });
+    }
+    res.status(200).send(`Tutor with id ${tutorId} deleted`);
+  } catch (error) {
+    res.status(404).send({ error: "Something went wrong, unable to Delete." });
+  }
+});
 
 module.exports = router;
