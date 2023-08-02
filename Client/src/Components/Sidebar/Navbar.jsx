@@ -25,11 +25,10 @@ const Navbar = ({ children }) => {
   //Sidebar toggle state
   const [toggle, setToggle] = useState(true);
   const menuData = [
-    { icon: <HiOutlineHome />, title: "Dashboard" },
-    { icon: <TbLayoutGridAdd />, title: "profile" },
-    { icon: <TbLayoutGridAdd />, title: "Admins" },
-    { icon: <TbLayoutGridAdd />, title: "Tutors" },
-    { icon: <TbLayoutGridAdd />, title: "Students" },
+    { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
+    { icon: <TbLayoutGridAdd />, title: "Admins", address: "/admin" },
+    { icon: <TbLayoutGridAdd />, title: "Tutors", address: "/tutor" },
+    { icon: <TbLayoutGridAdd />, title: "Students", address: "/student" },
     { icon: <TbLayoutGridAdd />, title: "Contents" },
     { icon: <TbLayoutGridAdd />, title: "Quizzes" },
     { icon: <GoMail />, title: "Doubts" },
@@ -57,7 +56,14 @@ const Navbar = ({ children }) => {
         {/* Side bar menu */}
         <ul className="side-menu top">
           {menuData?.map((data, i) => {
-            return <Menu Icon={data.icon} Title={data.title} key={i} />;
+            return (
+              <Menu
+                Icon={data.icon}
+                Title={data.title}
+                key={i}
+                Address={data.address}
+              />
+            );
           })}
         </ul>
       </div>
