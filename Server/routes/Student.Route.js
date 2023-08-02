@@ -77,33 +77,31 @@ router.post("/login", async (req, res) => {
 //   res.send("Doctor Registered Successfully");
 // });
 
-// router.patch("/:doctorId", async (req, res) => {
-//   const id = req.params.doctorId;
-//   const payload = req.body;
-//   try {
-//     const doctor = await DoctorModel.findByIdAndUpdate({ _id: id }, payload);
-//     if (!doctor) {
-//       res.status(404).send({ msg: `Doctor with id ${id} not found` });
-//     }
-//     res.status(200).send(`Doctor with id ${id} updated`);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong, unable to Update." });
-//   }
-// });
+router.patch("/:studentId", async (req, res) => {
+  const {studentId} = req.params;
+  const payload = req.body;
+  try {
+    const student = await StudentModel.findByIdAndUpdate({ _id: studentId }, payload);
+    if (!student) {
+      res.status(404).send({ msg: `Student with id ${studentId} not found` });
+    }
+    res.status(200).send(`Student with id ${studentId} updated`);
+  } catch (error) {
+    res.status(404).send({ error: "Something went wrong, unable to Update." });
+  }
+});
 
-// router.delete("/:doctorId", async (req, res) => {
-//   const id = req.params.doctorId;
-//   try {
-//     const doctor = await DoctorModel.findByIdAndDelete({ _id: id });
-//     if (!doctor) {
-//       res.status(404).send({ msg: `Doctor with id ${id} not found` });
-//     }
-//     res.status(200).send(`Doctor with id ${id} deleted`);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong, unable to Delete." });
-//   }
-// });
+router.delete("/:studentId", async (req, res) => {
+  const {studentId} = req.params;
+  try {
+    const student = await StudentModel.findByIdAndDelete({ _id: studentId });
+    if (!student) {
+      res.status(404).send({ msg: `Student with id ${studentId} not found` });
+    }
+    res.status(200).send(`Student with id ${studentId} deleted`);
+  } catch (error) {
+    res.status(400).send({ error: "Something went wrong, unable to Delete." });
+  }
+});
 
 module.exports = router;

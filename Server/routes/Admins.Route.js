@@ -80,33 +80,32 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// router.patch("/:adminId", async (req, res) => {
-//   const id = req.params.adminId;
-//   const payload = req.body;
-//   try {
-//     const admin = await AdminModel.findByIdAndUpdate({ _id: id }, payload);
-//     if (!admin) {
-//       res.status(404).send({ msg: `Admin with id ${id} not found` });
-//     }
-//     res.status(200).send(`Admin with id ${id} updated`);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong, unable to Update." });
-//   }
-// });
+router.patch("/:adminId", async (req, res) => {
+  const { adminId } = req.params;
+  const payload = req.body;
+  try {
+    const admin = await AdminModel.findByIdAndUpdate({ _id: adminId }, payload);
+    if (!admin) {
+      res.status(404).send({ msg: `Admin with id ${adminId} not found` });
+    }
+   res.status(200).send({ msg: `Admin with id ${adminId} updated` });
+  } catch (err) {
+    res.status(404).send({ error: "Something went wrong, unable to Update." });
+  }
+});
 
-// router.delete("/:adminId", async (req, res) => {
-//   const id = req.params.adminId;
-//   try {
-//     const admin = await AdminModel.findByIdAndDelete({ _id: id });
-//     if (!admin) {
-//       res.status(404).send({ msg: `Admin with id ${id} not found` });
-//     }
-//     res.status(200).send(`Admin with id ${id} deleted`);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong, unable to Delete." });
-//   }
-// });
+router.delete("/:adminId", async (req, res) => {
+  const { adminId } = req.params;
+
+  try {
+    const admin = await AdminModel.findByIdAndDelete({ _id: adminId });
+    if (!admin) {
+      res.status(404).send(`Admin with id ${adminId} not found`);
+    }
+    res.status(200).send(`Admin with id ${adminId} deleted`);
+  } catch (error) {
+    res.status(404).send({ error: "Something went wrong, unable to Delete." });
+  }
+});
 
 module.exports = router;
