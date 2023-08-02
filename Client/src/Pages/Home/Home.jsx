@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import Navbar from "../../Components/Sidebar/Navbar";
 
 // Icons import
-import { BiHome } from "react-icons/bi";
 import { PiKeyReturnThin, PiCurrencyCircleDollarLight } from "react-icons/pi";
 import { FiShoppingCart, FiUserPlus, FiUserMinus } from "react-icons/fi";
 import { LiaHandHoldingUsdSolid } from "react-icons/lia";
@@ -48,6 +47,7 @@ import { barData, lineData, pieData, COLORS } from "../../data.js";
 import FloatDiv from "../../Components/FloatDiv/FloatDiv";
 import SalesDiv from "../../Components/SalesDiv/SalesDiv";
 import { Navigate, useNavigate } from "react-router-dom";
+import Header from "../../Components/Header/Header";
 
 const Home = () => {
   const overviewData = [
@@ -79,12 +79,7 @@ const Home = () => {
           <FloatDiv />
 
           {/* Header */}
-          <div className="head-title">
-            <div className="head-left">Default</div>
-            <div className="head-right">
-              <BiHome /> <p>/ Dashboard</p> <span>/ Default</span>
-            </div>
-          </div>
+          <Header Title={"Default"} Address={"Default"} />
 
           {/* overview section */}
           <div className="overview">

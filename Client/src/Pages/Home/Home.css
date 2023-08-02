@@ -7,29 +7,6 @@
 .main::-webkit-scrollbar {
   display: none;
 }
-.main .head-title {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  grid-gap: 16px;
-  padding: 18px 25px;
-  box-shadow: rgba(184, 184, 184, 0.1) 0px 4px 4px;
-}
-.main .head-left {
-  font-size: 24px;
-  font-weight: 500;
-}
-.main .head-right {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 15px;
-  color: gray;
-}
-.main .head-right span {
-  color: var(--blue);
-  font-weight: 500;
-}
 .main .overview {
   display: flex;
   padding: 25px 20px;
@@ -500,18 +477,6 @@
   }
 }
 @media screen and (max-width: 768px) {
-  .main .head-title {
-    grid-gap: 10px;
-    padding: 10px 20px;
-  }
-  .main .head-left {
-    font-size: 20px;
-  }
-  .main .head-right {
-    gap: 6px;
-    font-size: 13px;
-  }
-
   .main .charts {
     gap: 10px;
     padding: 10px;

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./Tutor.css";
 import Navbar from "../../Components/Sidebar/Navbar";
-import { BiHome } from "react-icons/bi";
 import Table from "../../Components/Table/Table";
 import AddIcon from "../../Components/AddIcon/AddIcon";
 import { Button, Drawer, Form, Input, Select, Space } from "antd";
+import Header from "../../Components/Header/Header";
 const Tutor = () => {
   const [open, setOpen] = useState(false);
 
@@ -19,12 +19,7 @@ const Tutor = () => {
   return (
     <Navbar>
       <div className="admin">
-        <div className="head-title">
-          <div className="head-left">Tutor Data</div>
-          <div className="head-right">
-            <BiHome /> <p>/ Dashboard</p> <span>/ Tutor</span>
-          </div>
-        </div>
+        <Header Title={"Tutor Data"} Address={"Tutor"}/>
         <div className="adminData">
           <Table />
         </div>
