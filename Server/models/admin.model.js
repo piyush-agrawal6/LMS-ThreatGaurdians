@@ -18,7 +18,7 @@ const adminSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
-});
+}, { versionKey: false, timestamps: true });
 
 const AdminModel = mongoose.model("admin", adminSchema);
 
