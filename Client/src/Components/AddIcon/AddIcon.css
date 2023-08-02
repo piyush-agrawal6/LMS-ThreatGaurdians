@@ -1,0 +1,16 @@
+.addAdmin {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(58, 140, 216);
+  padding: 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.addAdmin > svg {
+  color: white;
+  font-size: 20px;
+}

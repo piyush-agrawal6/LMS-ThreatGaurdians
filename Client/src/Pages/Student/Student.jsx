@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./Admin.css";
+import "./Student.css";
 import Navbar from "../../Components/Sidebar/Navbar";
 import { BiHome } from "react-icons/bi";
 import Table from "../../Components/Table/Table";
 import AddIcon from "../../Components/AddIcon/AddIcon";
 import { Button, Drawer, Form, Input, Select, Space } from "antd";
-const Admin = () => {
+const Student = () => {
   const [open, setOpen] = useState(false);
 
   const showDrawer = () => {
@@ -20,9 +20,9 @@ const Admin = () => {
     <Navbar>
       <div className="admin">
         <div className="head-title">
-          <div className="head-left">Admin Data</div>
+          <div className="head-left">Student Data</div>
           <div className="head-right">
-            <BiHome /> <p>/ Dashboard</p> <span>/ Admin</span>
+            <BiHome /> <p>/ Dashboard</p> <span>/ Student</span>
           </div>
         </div>
         <div className="adminData">
@@ -85,4 +85,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Student;

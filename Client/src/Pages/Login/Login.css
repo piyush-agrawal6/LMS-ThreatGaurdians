@@ -32,7 +32,7 @@
 span {
   color: rgb(57, 57, 57);
 }
-.loginDetail > div:nth-child(2) input,
+input,
 select {
   box-sizing: border-box;
   width: 100%;

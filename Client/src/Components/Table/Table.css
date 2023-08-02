@@ -1,0 +1,35 @@
+.tableBody {
+  overflow: auto;
+}
+
+.tableBody table,
+th,
+td {
+  padding: 1rem;
+}
+.tableBody td {
+  text-align: center;
+}
+
+.tableBody::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.4rem;
+}
+.tableBody::-webkit-scrollbar-thumb {
+  border-radius: 0.5rem;
+  background-color: rgb(164, 164, 164);
+}
+
+.tableRow td:nth-child(3) {
+  font-size: 20px;
+}
+.tableRow td:nth-child(4) {
+  color: rgb(17, 198, 17);
+  cursor: pointer;
+  font-weight: 500;
+}
+.tableRow td:nth-child(5) {
+  color: rgb(243, 28, 28);
+  cursor: pointer;
+  font-weight: 500;
+}
