@@ -1,0 +1,37 @@
+.admin {
+  width: 100%;
+  max-height: calc(100vh - 75px);
+  overflow-y: auto;
+  background-color: var(--light);
+}
+.admin .head-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-gap: 16px;
+  padding: 18px 25px;
+  box-shadow: rgba(184, 184, 184, 0.1) 0px 4px 4px;
+}
+.admin .head-left {
+  font-size: 24px;
+  font-weight: 500;
+}
+.admin .head-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  color: gray;
+}
+.admin .head-right span {
+  color: var(--blue);
+  font-weight: 500;
+}
+
+.adminData {
+  margin: 25px 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: rgba(178, 181, 184, 0.2) 0px 8px 24px;
+}

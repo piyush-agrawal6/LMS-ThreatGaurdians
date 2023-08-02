@@ -58,15 +58,18 @@ const Home = () => {
     { icon: <BsClipboardMinus />, title: "Purchase rate", number: "5,700" },
     { icon: <AiOutlineLineChart />, title: "Profit", number: "690k" },
   ];
+
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
+
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!isAuthenticated) {
-      return navigate("/");
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     return navigate("/");
+  //   }
+  // }, []);
 
   return (
     <div>
