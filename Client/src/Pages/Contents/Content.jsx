@@ -5,9 +5,15 @@ import Header from "../../Components/Header/Header";
 import ContentBox from "../../Components/Content/ContentBox";
 import AddIcon from "../../Components/AddIcon/AddIcon";
 import { Button, Drawer, Space } from "antd";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const Content = () => {
   const [open, setOpen] = useState(false);
+  const {
+    data: { isAuthenticated },
+  } = useSelector((store) => store.auth);
 
+  const navigate = useNavigate();
   const showDrawer = () => {
     setOpen(true);
   };
@@ -41,6 +47,12 @@ const Content = () => {
         console.log(result.info);
       }
     );
+  }, []);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return navigate("/");
+    }
   }, []);
 
   return (

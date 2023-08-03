@@ -2,7 +2,7 @@ import React from "react";
 import "./Table.css";
 import TableRow from "./TableRow";
 
-const Table = () => {
+const Table = ({ Data }) => {
   return (
     <section className="tableBody">
       <table>
@@ -16,20 +16,9 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
-          <TableRow />
+          {Data?.map((data, i) => {
+            return <TableRow data={data} key={i} />;
+          })}
         </tbody>
       </table>
     </section>

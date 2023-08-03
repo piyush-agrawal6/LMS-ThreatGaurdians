@@ -4,30 +4,15 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 
-// router.get("/", async (req, res) => {
-//   let query = req.query;
-//   try {
-//     const admins = await AdminModel.find(query);
-//     res.status(200).send(admins);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong" });
-//   }
-// });
+router.get("/all", async (req, res) => {
+  try {
+    const admins = await AdminModel.find();
+    res.send({ message: "All admins data", admins });
+  } catch (error) {
+    res.status(400).send({ message: "Something went wrong" });
+  }
+});
 
-// router.post("/register", async (req, res) => {
-//   const payload = req.body;
-//   try {
-//     const admin = new AdminModel(payload);
-//     await admin.save();
-//   } catch (error) {
-//     res.send("Something went wrong, unable to Register.");
-//     console.log(error);
-//   }
-//   res.send("Admin Registered Successfully");
-// });
-
-// **************** end points: "/admin/register" for registering any new admin ****************
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   console.log(name, email, password);
@@ -49,7 +34,10 @@ router.post("/register", async (req, res) => {
             password: secure_password,
           });
           await admin.save();
-          res.status(201).send({ msg: "Admin Registered Successfully" });
+          let newAdmin = await AdminModel.find({ email });
+          res
+            .status(201)
+            .send({ msg: "Admin Registered Successfully", admin: newAdmin[0] });
         }
       }
     );
@@ -58,7 +46,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// **************** end points: "/admin/login" for Login any exsiting admin ****************
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -96,26 +83,19 @@ router.patch("/:adminId", async (req, res) => {
   const payload = req.body;
   try {
     const admin = await AdminModel.findByIdAndUpdate({ _id: adminId }, payload);
-    if (!admin) {
-      res.status(404).send({ msg: `Admin with id ${adminId} not found` });
-    }
-    res.status(200).send({ msg: `Admin with id ${adminId} updated` });
+    res.status(200).send({ msg: "Updated Admin" });
   } catch (err) {
-    res.status(404).send({ error: "Something went wrong, unable to Update." });
+    res.status(404).send({ msg: "Error" });
   }
 });
 
 router.delete("/:adminId", async (req, res) => {
   const { adminId } = req.params;
-
   try {
     const admin = await AdminModel.findByIdAndDelete({ _id: adminId });
-    if (!admin) {
-      res.status(404).send(`Admin with id ${adminId} not found`);
-    }
-    res.status(200).send(`Admin with id ${adminId} deleted`);
+    res.status(200).send({ msg: "Deleted Admin" });
   } catch (error) {
-    res.status(404).send({ error: "Something went wrong, unable to Delete." });
+    res.status(404).send({ msg: "Error" });
   }
 });
 
