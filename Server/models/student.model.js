@@ -18,7 +18,18 @@ const studentSchema = mongoose.Schema({
     type: Boolean,
     default: true,
   },
-},{ versionKey: false, timestamps: true });
+  class: {
+    type: String,
+    required: true,
+  },
+  quiz: Array,
+  totalPoints: Number,
+  premium: {
+    type: Boolean,
+    default: false,
+  },
+  averageTime: { type: TimeRanges }
+}, { versionKey: false, timestamps: true });
 
 const StudentModel = mongoose.model("student", studentSchema);
 
