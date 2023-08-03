@@ -5,19 +5,31 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 
 // **************** end points: "/student/register" for registering any new student ****************
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    bcrypt.hash(password, +(process.env.Salt_rounds), async (err, secure_password) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const student = new StudentModel({ name, email, password: secure_password });
-        await student.save();
-        res.status(201).send({ msg: 'Student Registered Successfully' });
+    let user = await StudentModel.find({ email });
+    if (user.length > 0) {
+      return res.send({ msg: "User already registered" });
+    }
+    bcrypt.hash(
+      password,
+      +process.env.Salt_rounds,
+      async (err, secure_password) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const student = new StudentModel({
+            name,
+            email,
+            password: secure_password,
+          });
+          await student.save();
+          res.status(201).send({ msg: "Student Registered Successfully" });
+        }
       }
-    })
+    );
   } catch (err) {
     res.status(404).send({ msg: "Student Registation failed" });
   }
@@ -47,7 +59,7 @@ router.post("/login", async (req, res) => {
         }
       });
     } else {
-      res.send("Wrong credentials");
+      res.send({ message: "Wrong credentials" });
     }
   } catch (error) {
     res.status(404).send({ message: "Error" });
@@ -78,10 +90,13 @@ router.post("/login", async (req, res) => {
 // });
 
 router.patch("/:studentId", async (req, res) => {
-  const {studentId} = req.params;
+  const { studentId } = req.params;
   const payload = req.body;
   try {
-    const student = await StudentModel.findByIdAndUpdate({ _id: studentId }, payload);
+    const student = await StudentModel.findByIdAndUpdate(
+      { _id: studentId },
+      payload
+    );
     if (!student) {
       res.status(404).send({ msg: `Student with id ${studentId} not found` });
     }
@@ -92,7 +107,7 @@ router.patch("/:studentId", async (req, res) => {
 });
 
 router.delete("/:studentId", async (req, res) => {
-  const {studentId} = req.params;
+  const { studentId } = req.params;
   try {
     const student = await StudentModel.findByIdAndDelete({ _id: studentId });
     if (!student) {

@@ -9,11 +9,11 @@ const quizSchema = mongoose.Schema({
   pointPerQuestion: Number,
   negativeMarking: { type: String, default: 'No' },
   negativeMarkingPerQuestion: { type: String, default: 'No' },
-  totalTime: TimeRanges,
+  // totalTime: TimeRanges,
   questionData: Array,
   totalPoint: Number,
   totalTime: Number,
-  averageTime: { type: TimeRanges }
+  // averageTime: { type: TimeRanges }
 
 }, { versionKey: false, timestamps: true });
 

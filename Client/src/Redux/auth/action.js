@@ -1,15 +1,11 @@
 import * as types from "./types";
 import axios from "axios";
-
+import url from "../../BackendURL.js";
 //login user
 export const adminLogin = (data) => async (dispatch) => {
-  console.log(data);
   try {
     dispatch({ type: types.LOGIN_ADMIN_REQUEST });
-    const res = await axios.post(
-      "https://zany-gray-clam-gear.cyclic.app/nurses/login",
-      data
-    );
+    const res = await axios.post(`${url}/admin/login`, data);
     dispatch({
       type: types.LOGIN_ADMIN_SUCCESS,
       payload: {
@@ -18,6 +14,7 @@ export const adminLogin = (data) => async (dispatch) => {
         token: res.data.token,
       },
     });
+    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -34,10 +31,7 @@ export const tutorLogin = (data) => async (dispatch) => {
   console.log(data);
   try {
     dispatch({ type: types.LOGIN_TUTOR_REQUEST });
-    const res = await axios.post(
-      "https://zany-gray-clam-gear.cyclic.app/doctors/login",
-      data
-    );
+    const res = await axios.post(`${url}/tutor/login`, data);
     console.log(res.data);
     dispatch({
       type: types.LOGIN_TUTOR_SUCCESS,
@@ -63,10 +57,7 @@ export const studentLogin = (data) => async (dispatch) => {
   console.log(data);
   try {
     dispatch({ type: types.LOGIN_STUDENT_REQUEST });
-    const res = await axios.post(
-      "https://zany-gray-clam-gear.cyclic.app/admin/login",
-      data
-    );
+    const res = await axios.post(`${url}/student/login`, data);
     console.log(res.data);
     dispatch({
       type: types.LOGIN_STUDENT_SUCCESS,
@@ -89,6 +80,7 @@ export const studentLogin = (data) => async (dispatch) => {
 
 // logout user
 export const authLogout = () => async (dispatch) => {
+  console.log("called");
   try {
     dispatch({
       type: types.AUTH_LOGOUT,

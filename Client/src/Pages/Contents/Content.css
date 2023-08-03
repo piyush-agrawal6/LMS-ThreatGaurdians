@@ -13,5 +13,9 @@
     background: white;
     border-radius: 15px;
     box-shadow: rgba(178, 181, 184, 0.2) 0px 8px 24px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   

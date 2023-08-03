@@ -10,16 +10,22 @@ const initialState = {
 };
 export default function authReducer(state = initialState, { type, payload }) {
   switch (type) {
-    case types.LOGIN_STUDENT_REQUEST ||
-      types.LOGIN_ADMIN_REQUEST ||
-      types.LOGIN_TUTOR_REQUEST:
+    case types.LOGIN_STUDENT_REQUEST:
       return {
         ...state,
         userLogin: { loading: true, error: false },
       };
-    case types.LOGIN_STUDENT_SUCCESS ||
-      types.LOGIN_ADMIN_SUCCESS ||
-      types.LOGIN_TUTOR_SUCCESS:
+    case types.LOGIN_ADMIN_REQUEST:
+      return {
+        ...state,
+        userLogin: { loading: true, error: false },
+      };
+    case types.LOGIN_TUTOR_REQUEST:
+      return {
+        ...state,
+        userLogin: { loading: true, error: false },
+      };
+    case types.LOGIN_STUDENT_SUCCESS:
       localStorage.setItem("token", payload.token);
       return {
         ...state,
@@ -30,9 +36,39 @@ export default function authReducer(state = initialState, { type, payload }) {
           user: payload.user,
         },
       };
-    case types.LOGIN_STUDENT_ERROR ||
-      types.LOGIN_ADMIN_ERROR ||
-      types.LOGIN_TUTOR_ERROR:
+    case types.LOGIN_ADMIN_SUCCESS:
+      localStorage.setItem("token", payload.token);
+      return {
+        ...state,
+        userLogin: { loading: false, error: false, message: payload.message },
+        data: {
+          isAuthenticated: payload.token ? true : false,
+          token: payload.token,
+          user: payload.user,
+        },
+      };
+    case types.LOGIN_TUTOR_SUCCESS:
+      localStorage.setItem("token", payload.token);
+      return {
+        ...state,
+        userLogin: { loading: false, error: false, message: payload.message },
+        data: {
+          isAuthenticated: payload.token ? true : false,
+          token: payload.token,
+          user: payload.user,
+        },
+      };
+    case types.LOGIN_TUTOR_ERROR:
+      return {
+        ...state,
+        userLogin: { loading: false, error: true, message: payload.message },
+      };
+    case types.LOGIN_ADMIN_ERROR:
+      return {
+        ...state,
+        userLogin: { loading: false, error: true, message: payload.message },
+      };
+    case types.LOGIN_STUDENT_ERROR:
       return {
         ...state,
         userLogin: { loading: false, error: true, message: payload.message },

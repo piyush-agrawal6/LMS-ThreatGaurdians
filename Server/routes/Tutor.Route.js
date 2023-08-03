@@ -5,21 +5,33 @@ const bcrypt = require("bcrypt");
 const router = express.Router();
 
 // **************** end points: "/tutor/register" for registering any new tutor ****************
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    bcrypt.hash(password, +(process.env.Salt_rounds), async (err, secure_password) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const tutor = new TutorModel({ name, email, password: secure_password });
-        await tutor.save();
-        res.status(201).send({ msg: 'Tutor Registered Successfully' });
+    let user = await TutorModel.find({ email });
+    if (user.length > 0) {
+      return res.send({ msg: "User already registered" });
+    }
+    bcrypt.hash(
+      password,
+      +process.env.Salt_rounds,
+      async (err, secure_password) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const tutor = new TutorModel({
+            name,
+            email,
+            password: secure_password,
+          });
+          await tutor.save();
+          res.status(201).send({ msg: "Tutor Registered Successfully" });
+        }
       }
-    })
+    );
   } catch (err) {
-    res.status(404).send({ msg: "Tutor Registation failed" });
+    res.status(404).send({ msg: "Tutor Registration failed" });
   }
 });
 
@@ -47,7 +59,7 @@ router.post("/login", async (req, res) => {
         }
       });
     } else {
-      res.send("Wrong credentials");
+      res.send({ message: "Wrong credentials" });
     }
   } catch (error) {
     res.status(404).send({ message: "Error" });
