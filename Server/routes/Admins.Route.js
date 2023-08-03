@@ -28,24 +28,35 @@ const router = express.Router();
 // });
 
 // **************** end points: "/admin/register" for registering any new admin ****************
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-
+  console.log(name, email, password);
   try {
-    bcrypt.hash(password, +(process.env.Salt_rounds), async (err, secure_password) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const admin = new AdminModel({ name, email, password: secure_password });
-        await admin.save();
-        res.status(201).send({ msg: 'Admin Registered Successfully' });
+    let user = await AdminModel.find({ email });
+    if (user.length > 0) {
+      return res.send({ msg: "User already registered" });
+    }
+    bcrypt.hash(
+      password,
+      +process.env.Salt_rounds,
+      async (err, secure_password) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const admin = new AdminModel({
+            name,
+            email,
+            password: secure_password,
+          });
+          await admin.save();
+          res.status(201).send({ msg: "Admin Registered Successfully" });
+        }
       }
-    })
+    );
   } catch (err) {
-    res.status(404).send({ msg: "Admin Registation failed" });
+    res.status(404).send({ msg: "Admin Registration failed" });
   }
 });
-
 
 // **************** end points: "/admin/login" for Login any exsiting admin ****************
 router.post("/login", async (req, res) => {
@@ -73,7 +84,7 @@ router.post("/login", async (req, res) => {
         }
       });
     } else {
-      res.send("Wrong credentials");
+      res.send({ message: "Wrong credentials" });
     }
   } catch (error) {
     res.status(404).send({ message: "Error" });
@@ -88,7 +99,7 @@ router.patch("/:adminId", async (req, res) => {
     if (!admin) {
       res.status(404).send({ msg: `Admin with id ${adminId} not found` });
     }
-   res.status(200).send({ msg: `Admin with id ${adminId} updated` });
+    res.status(200).send({ msg: `Admin with id ${adminId} updated` });
   } catch (err) {
     res.status(404).send({ error: "Something went wrong, unable to Update." });
   }

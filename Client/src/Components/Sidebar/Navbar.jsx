@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 // Image imports
-import user from "../../Assets/profile.png";
+import user from "../../Assets/useravatar.png";
 import logo from "../../Assets/logo.png";
 
 // Icon imports
@@ -21,22 +21,35 @@ import { GoChevronDown } from "react-icons/go";
 import { RiAdminLine } from "react-icons/ri";
 import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { AiOutlineQuestion } from "react-icons/ai";
-
+import { useDispatch, useSelector } from "react-redux";
 // CSS imports
 import "./Navbar.css";
 import Menu from "../Menu/Menu";
 import { Dropdown } from "antd";
+import { authLogout } from "../../Redux/auth/action";
 
 const Navbar = ({ children }) => {
+  const auth = useSelector((store) => store.auth);
+  const navigate = useNavigate();
+  if (!auth.data.isAuthenticated) {
+    return navigate("/");
+  }
+
   //Sidebar toggle state
   const [toggle, setToggle] = useState(true);
-
+  const { userType } = useSelector((store) => store.auth.data.user);
   //Sidebar menu
-  const menuData = [
+  const adminData = [
     { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
     { icon: <RiAdminLine />, title: "Admins", address: "/admin" },
     { icon: <BiUserVoice />, title: "Tutors", address: "/tutor" },
     { icon: <PiStudentDuotone />, title: "Students", address: "/student" },
+    { icon: <TbBrandSpeedtest />, title: "Quizzes", address: "/quizzes" },
+    { icon: <TbLayoutGridAdd />, title: "Contents", address: "/contents" },
+    { icon: <TbUsers />, title: "Leader Board", address: "/leaderboard" },
+  ];
+  const studentData = [
+    { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
     { icon: <TbBrandSpeedtest />, title: "Quizzes", address: "/quizzes" },
     { icon: <TbLayoutGridAdd />, title: "Contents", address: "/contents" },
     { icon: <AiOutlineQuestion />, title: "Doubts", address: "/doubts" },
@@ -48,7 +61,15 @@ const Navbar = ({ children }) => {
       title: "Premium",
       address: "/premium",
     },
-    { icon: <BiLogOut />, title: "Logout", address: "/" },
+  ];
+  const tutorData = [
+    { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
+    { icon: <PiStudentDuotone />, title: "Students", address: "/student" },
+    { icon: <TbBrandSpeedtest />, title: "Quizzes", address: "/quizzes" },
+    { icon: <TbLayoutGridAdd />, title: "Contents", address: "/contents" },
+    { icon: <AiOutlineQuestion />, title: "Doubts", address: "/doubts" },
+    { icon: <TbMessages />, title: "Message", address: "/messages" },
+    { icon: <TbUsers />, title: "Leader Board", address: "/leaderboard" },
   ];
 
   // Dropdown menu
@@ -66,6 +87,12 @@ const Navbar = ({ children }) => {
       label: <span>Logout</span>,
     },
   ];
+
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(authLogout());
+  };
+
   return (
     <>
       {/* Side Bar */}
@@ -83,16 +110,45 @@ const Navbar = ({ children }) => {
 
         {/* Side bar menu */}
         <ul className="side-menu top">
-          {menuData?.map((data, i) => {
-            return (
-              <Menu
-                Icon={data.icon}
-                Title={data.title}
-                key={i}
-                Address={data.address}
-              />
-            );
-          })}
+          {userType === "Tutor"
+            ? tutorData?.map((data, i) => {
+                return (
+                  <Menu
+                    Icon={data.icon}
+                    Title={data.title}
+                    key={i}
+                    Address={data.address}
+                  />
+                );
+              })
+            : ""}
+          {userType === "Student"
+            ? studentData?.map((data, i) => {
+                return (
+                  <Menu
+                    Icon={data.icon}
+                    Title={data.title}
+                    key={i}
+                    Address={data.address}
+                  />
+                );
+              })
+            : ""}
+          {userType === "Admin"
+            ? adminData?.map((data, i) => {
+                return (
+                  <Menu
+                    Icon={data.icon}
+                    Title={data.title}
+                    key={i}
+                    Address={data.address}
+                  />
+                );
+              })
+            : ""}
+          <span onClick={() => handleLogout()}>
+            <Menu Icon={<BiLogOut />} Title={"Logout"} Address={""} />
+          </span>
         </ul>
       </div>
 

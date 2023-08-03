@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,8 +13,8 @@ const Login = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const dispatch = useDispatch();
   const auth = useSelector((store) => store.auth);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleFormChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -30,11 +30,11 @@ const Login = () => {
     setLoading(true);
     if (formData.type === "admin") {
       dispatch(adminLogin(formData)).then((res) => {
-        if (res.message === "Wrong Credentials") {
+        if (res.message === "Wrong credentials") {
           setLoading(false);
           messageApi.open({
             type: "info",
-            content: "Wrong Credentials !",
+            content: "Wrong credentials !",
             duration: 3,
           });
         } else if (res.message === "Error") {
@@ -52,11 +52,11 @@ const Login = () => {
     }
     if (formData.type === "tutor") {
       dispatch(tutorLogin(formData)).then((res) => {
-        if (res.message === "User does not exist") {
+        if (res.message === "Wrong credentials") {
           setLoading(false);
           messageApi.open({
             type: "info",
-            content: "User doesn't already exists , Please signup.",
+            content: "Wrong credentials !",
             duration: 3,
           });
         } else if (res.message === "error") {
@@ -74,11 +74,11 @@ const Login = () => {
     }
     if (formData.type === "student") {
       dispatch(studentLogin(formData)).then((res) => {
-        if (res.message === "User does not exist") {
+        if (res.message === "Wrong credentials") {
           setLoading(false);
           messageApi.open({
             type: "info",
-            content: "User doesn't already exists , Please signup.",
+            content: "Wrong credentials !",
             duration: 3,
           });
         } else if (res.message === "error") {

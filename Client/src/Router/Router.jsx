@@ -19,6 +19,7 @@ const Router = () => {
         <Route path="/student" element={<Student />} />
         <Route path="/contents" element={<Content />} />
         <Route path="/quizzes" element={<Quizzes />} />
+        <Route path="*" element={<Login />} />
       </Routes>
     </div>
   );
