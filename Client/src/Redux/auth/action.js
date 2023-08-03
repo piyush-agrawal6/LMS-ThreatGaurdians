@@ -20,7 +20,7 @@ export const adminLogin = (data) => async (dispatch) => {
     dispatch({
       type: types.LOGIN_ADMIN_ERROR,
       payload: {
-        message: error,
+        message: "error",
       },
     });
   }
@@ -46,7 +46,7 @@ export const tutorLogin = (data) => async (dispatch) => {
     dispatch({
       type: types.LOGIN_TUTOR_ERROR,
       payload: {
-        message: error,
+        message: "error",
       },
     });
   }
@@ -72,7 +72,7 @@ export const studentLogin = (data) => async (dispatch) => {
     dispatch({
       type: types.LOGIN_STUDENT_ERROR,
       payload: {
-        message: error,
+        message: "error",
       },
     });
   }

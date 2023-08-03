@@ -37,6 +37,13 @@ const Login = () => {
             content: "Wrong credentials !",
             duration: 3,
           });
+        } else if (res.message === "Access Denied") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "Your access has been revoked by the admin !",
+            duration: 3,
+          });
         } else if (res.message === "Error") {
           setLoading(false);
           messageApi.open({
@@ -59,6 +66,13 @@ const Login = () => {
             content: "Wrong credentials !",
             duration: 3,
           });
+        } else if (res.message === "Access Denied") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "Your access has been revoked by the admin !",
+            duration: 3,
+          });
         } else if (res.message === "error") {
           setLoading(false);
           messageApi.open({
@@ -79,6 +93,13 @@ const Login = () => {
           messageApi.open({
             type: "info",
             content: "Wrong credentials !",
+            duration: 3,
+          });
+        } else if (res.message === "Access Denied") {
+          setLoading(false);
+          messageApi.open({
+            type: "info",
+            content: "Your access has been revoked by the admin !",
             duration: 3,
           });
         } else if (res.message === "error") {
