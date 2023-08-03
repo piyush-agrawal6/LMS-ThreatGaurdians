@@ -6,7 +6,7 @@ import user from "../../Assets/useravatar.png";
 import logo from "../../Assets/logo.png";
 
 // Icon imports
-import { BiLogOut, BiHeart, BiUserVoice } from "react-icons/bi";
+import { BiLogOut, BiUserVoice } from "react-icons/bi";
 import {
   TbLayoutGridAdd,
   TbMessages,
@@ -29,15 +29,19 @@ import { Dropdown } from "antd";
 import { authLogout } from "../../Redux/auth/action";
 
 const Navbar = ({ children }) => {
-  const auth = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const auth = useSelector((store) => store.auth);
   if (!auth.data.isAuthenticated) {
     return navigate("/");
   }
 
+  const {
+    user: { userType, name, premium },
+  } = useSelector((store) => store.auth.data);
+
   //Sidebar toggle state
   const [toggle, setToggle] = useState(true);
-  const { userType } = useSelector((store) => store.auth.data.user);
   //Sidebar menu
   const adminData = [
     { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
@@ -56,11 +60,6 @@ const Navbar = ({ children }) => {
     { icon: <TbMessages />, title: "Message", address: "/messages" },
     { icon: <TbUsers />, title: "Leader Board", address: "/leaderboard" },
     { icon: <BsBookmarkCheck />, title: "Bookmarks", address: "/bookmarks" },
-    {
-      icon: <MdOutlineWorkspacePremium />,
-      title: "Premium",
-      address: "/premium",
-    },
   ];
   const tutorData = [
     { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
@@ -75,20 +74,15 @@ const Navbar = ({ children }) => {
   // Dropdown menu
   const items = [
     {
-      key: "2",
-      label: <Link>Buy Premium</Link>,
-    },
-    {
       key: "3",
       label: <Link>Change Password</Link>,
     },
     {
       key: "1",
-      label: <span>Logout</span>,
+      label: <span onClick={() => handleLogout()}>Logout</span>,
     },
   ];
 
-  const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(authLogout());
   };
@@ -146,6 +140,15 @@ const Navbar = ({ children }) => {
                 );
               })
             : ""}
+          {userType == "Student" && !premium ? (
+            <Menu
+              Icon={<MdOutlineWorkspacePremium />}
+              Title={"Premium"}
+              Address={"/premium"}
+            />
+          ) : (
+            ""
+          )}
           <span onClick={() => handleLogout()}>
             <Menu Icon={<BiLogOut />} Title={"Logout"} Address={""} />
           </span>
@@ -160,9 +163,19 @@ const Navbar = ({ children }) => {
               className="menuIcon"
               onClick={() => setToggle(!toggle)}
             />
-            <Link href="/" className="nav-link">
-              🔥 Access all features with premium ! <span>Buy now !</span>
-            </Link>
+            {userType == "Student" ? (
+              !premium ? (
+                <Link href="/" className="nav-link">
+                  🔥 Access all features with premium ! <span>Buy now !</span>
+                </Link>
+              ) : (
+                "🔥You are a premium member !"
+              )
+            ) : (
+              <Link href="/" className="nav-link">
+                🔥 Welcome to LMS !
+              </Link>
+            )}
           </div>
           <div>
             <Link href="/" className="notification">
@@ -173,9 +186,9 @@ const Navbar = ({ children }) => {
               <Link href="/" className="profile">
                 <img src={user} />
                 <div>
-                  <p>Emay Walter</p>
+                  <p>{name}..</p>
                   <p>
-                    Admin <GoChevronDown />
+                    {userType} <GoChevronDown />
                   </p>
                 </div>
               </Link>

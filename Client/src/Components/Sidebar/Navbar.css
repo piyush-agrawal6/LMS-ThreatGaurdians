@@ -143,6 +143,9 @@
 #content nav .profile p:nth-child(1) {
   font-size: 14px;
   font-weight: 600;
+  width: 85px;
+  height: 18px;
+  overflow: hidden;
 }
 #content nav .profile p:nth-child(2) {
   font-size: 12px;
