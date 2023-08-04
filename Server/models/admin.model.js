@@ -20,8 +20,8 @@ const adminSchema = mongoose.Schema(
       default: "Admin",
     },
     access: {
-      type: Boolean,
-      default: true,
+      type: String,
+      default: "true",
     },
   },
   { versionKey: false, timestamps: true }

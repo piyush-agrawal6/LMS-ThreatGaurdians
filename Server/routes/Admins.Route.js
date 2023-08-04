@@ -3,6 +3,7 @@ const { AdminModel } = require("../models/admin.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const nodemailer = require("nodemailer");
 
 router.get("/all", async (req, res) => {
   try {
@@ -35,9 +36,33 @@ router.post("/register", async (req, res) => {
           });
           await admin.save();
           let newAdmin = await AdminModel.find({ email });
-          res
-            .status(201)
-            .send({ msg: "Admin Registered Successfully", admin: newAdmin[0] });
+
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: "agrawaljoy1@gmail.com",
+              pass: "nsziioprjzwcodlm",
+            },
+          });
+
+          const mailOptions = {
+            from: "agrawaljoy1@gmail.com",
+            to: email,
+            subject: "Account ID and Password",
+            text: `Welcome to LMS, Congratulations,Your account has been created successfully.This is your User type : Admin and Password : ${password}  `,
+          };
+
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              return res.send({ msg: "error" });
+            }
+            res.send({ msg: "Password sent" });
+          });
+
+          res.send({
+            msg: "Admin Registered Successfully",
+            admin: newAdmin[0],
+          });
         }
       }
     );
@@ -51,7 +76,7 @@ router.post("/login", async (req, res) => {
   try {
     const admin = await AdminModel.find({ email });
     if (admin.length > 0) {
-      if (admin[0].access == false) {
+      if (admin[0].access == "false") {
         return res.send({ message: "Access Denied" });
       }
       bcrypt.compare(password, admin[0].password, (err, results) => {
@@ -83,7 +108,8 @@ router.patch("/:adminId", async (req, res) => {
   const payload = req.body;
   try {
     const admin = await AdminModel.findByIdAndUpdate({ _id: adminId }, payload);
-    res.status(200).send({ msg: "Updated Admin" });
+    const updatedAdmin = await AdminModel.find({ _id: adminId });
+    res.status(200).send({ msg: "Updated Admin", admin: updatedAdmin[0] });
   } catch (err) {
     res.status(404).send({ msg: "Error" });
   }
