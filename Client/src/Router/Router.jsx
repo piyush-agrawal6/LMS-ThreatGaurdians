@@ -7,6 +7,7 @@ import Tutor from "../Pages/Tutor/Tutor";
 import Student from "../Pages/Student/Student";
 import Quizzes from "../Pages/Quizzes/Quizzes";
 import Content from "../Pages/Contents/Content";
+import LeaderBoard from "../Pages/LeaderBoard/LeaderBoard";
 
 const Router = () => {
   return (
@@ -19,7 +20,8 @@ const Router = () => {
         <Route path="/student" element={<Student />} />
         <Route path="/contents" element={<Content />} />
         <Route path="/quizzes" element={<Quizzes />} />
-        <Route path="*" element={<Login />} />
+        <Route path="/leaderboard" element={<LeaderBoard />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </div>
   );

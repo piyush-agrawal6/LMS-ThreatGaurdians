@@ -18,3 +18,47 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+.Review {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(168, 98, 233);
+  color: white;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.Submit {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(31, 230, 137);
+  color: white;
+  font-weight: 500;
+}
+.questionDiv {
+  margin-bottom: 10px;
+  border: 1px solid gray;
+  padding: 10px;
+}
+.questionDiv h4 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.questionDiv p {
+  margin-bottom: 5px;
+  color: rgb(19, 169, 19);
+}
+.questionDiv button {
+  background-color: rgba(247, 24, 24, 0.911);
+  color: white;
+  padding: 4px 10px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}

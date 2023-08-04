@@ -20,15 +20,15 @@ td {
   background-color: rgb(164, 164, 164);
 }
 
-.tableRow td:nth-child(3) {
+.tableRow td:nth-last-child(3) {
   font-size: 20px;
 }
-.tableRow td:nth-child(4) {
+.tableRow td:nth-last-child(2) {
   color: rgb(17, 198, 17);
   cursor: pointer;
   font-weight: 500;
 }
-.tableRow td:nth-child(5) {
+.tableRow td:last-child {
   color: rgb(243, 28, 28);
   cursor: pointer;
   font-weight: 500;

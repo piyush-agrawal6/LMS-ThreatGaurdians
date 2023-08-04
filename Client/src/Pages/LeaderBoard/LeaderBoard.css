@@ -1,0 +1,16 @@
+.leaderboard {
+  width: 100%;
+  max-height: calc(100vh - 75px);
+  overflow-y: auto;
+  background-color: var(--light);
+}
+.leaderboard::-webkit-scrollbar {
+  display: none;
+}
+.leaderboardData {
+  margin: 25px 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: rgba(178, 181, 184, 0.2) 0px 8px 24px;
+}

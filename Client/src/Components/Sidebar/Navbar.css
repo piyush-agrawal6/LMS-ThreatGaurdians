@@ -25,6 +25,9 @@
   padding: 20px;
   box-shadow: rgba(151, 170, 210, 0.2) 0px 7px 29px 0px;
 }
+#sidebar .logo img {
+ width: 120px;
+}
 #sidebar .side-menu {
   width: 100%;
   margin-top: 25px;

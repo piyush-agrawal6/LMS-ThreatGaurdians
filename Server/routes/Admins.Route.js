@@ -16,7 +16,6 @@ router.get("/all", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(name, email, password);
   try {
     let user = await AdminModel.find({ email });
     if (user.length > 0) {

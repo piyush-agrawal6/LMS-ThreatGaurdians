@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const quizSchema = mongoose.Schema(
   {
     title: String,
-    thumbnail: String,
+    thumbnail: {
+      type: String,
+      default: "https://akm-img-a-in.tosshub.com/aajtak/2023-02/quiz_01.png",
+    },
     class: Number,
     subject: String,
     creator: String,
@@ -15,7 +18,6 @@ const quizSchema = mongoose.Schema(
     questionData: Array,
     totalPoint: Number,
     totalTime: Number,
-    averageTime: String,
   },
   { versionKey: false, timestamps: true }
 );

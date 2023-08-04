@@ -17,11 +17,11 @@ const initialFormData = {
 };
 
 const Admin = () => {
+  const [FormData, setFormData] = useState(initialFormData);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const [open, setOpen] = useState(false);
-  const [FormData, setFormData] = useState(initialFormData);
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
@@ -69,7 +69,7 @@ const Admin = () => {
           });
           messageApi.open({
             type: "success",
-            content: "Password sent over mail",
+            content: "Password sent over mail.",
             duration: 3,
           });
         }

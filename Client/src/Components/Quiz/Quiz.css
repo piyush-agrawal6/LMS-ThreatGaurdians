@@ -6,6 +6,9 @@
 }
 .quizDiv img {
   width: 100%;
+  height: 135px;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 .quizDiv > div:nth-child(1) {
@@ -22,7 +25,7 @@
   font-size: 14px;
   margin-bottom: 5px;
 }
-.quizDiv > div:nth-child(2) button {
+.startQuiz {
   padding: 5px 12px;
   outline: none;
   border: none;
@@ -32,8 +35,21 @@
   font-weight: 600;
   cursor: pointer;
 }
-.quizDiv > div:nth-child(2) button:hover {
+.deleteQuiz {
+  padding: 5px 12px;
+  outline: none;
+  border: none;
+  background-color: rgba(233, 38, 38, 0.874);
+  border-radius: 5px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+.startQuiz:hover {
   background-color: rgb(76, 157, 234);
+}
+.deleteQuiz:hover {
+  background-color: rgb(244, 101, 101);
 }
 .quizPoint {
   background-color: rgba(13, 200, 13, 0.788);
