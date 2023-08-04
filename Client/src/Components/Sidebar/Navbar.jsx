@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 
 // Image imports
 import user from "../../Assets/useravatar.png";
-import logo from "../../Assets/logo.png";
+import logo from "../../Assets/logo1.png";
 
 // Icon imports
 import { BiLogOut, BiUserVoice } from "react-icons/bi";

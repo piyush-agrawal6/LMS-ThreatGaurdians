@@ -7,11 +7,14 @@ export const adminRegister = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.REGISTER_ADMIN_REQUEST });
     const res = await axios.post(`${url}/admin/register`, data);
-    dispatch({
-      type: types.REGISTER_ADMIN_SUCCESS,
-      payload: { admin: res.data.admin },
-    });
-    console.log(res.data)
+    if (res.data.admin) {
+      dispatch({
+        type: types.REGISTER_ADMIN_SUCCESS,
+        payload: { admin: res.data.admin },
+      });
+    }
+
+    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({

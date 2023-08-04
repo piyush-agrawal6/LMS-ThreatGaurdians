@@ -6,6 +6,9 @@
 }
 .contentDiv img {
   width: 100%;
+  height: 135px;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 .contentDiv > div:nth-child(1) {
@@ -35,4 +38,8 @@
 .contentDiv > div:nth-child(2) button:hover {
   background-color: rgb(76, 157, 234);
 }
-
+.contentOption{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}

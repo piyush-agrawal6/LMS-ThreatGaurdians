@@ -4,14 +4,20 @@ import Navbar from "../../Components/Sidebar/Navbar";
 import Header from "../../Components/Header/Header";
 import ContentBox from "../../Components/Content/ContentBox";
 import AddIcon from "../../Components/AddIcon/AddIcon";
-import { Button, Drawer, Space } from "antd";
-import { useSelector } from "react-redux";
+import { Button, Drawer, Space, Spin, message } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { createContent, getContentData } from "../../Redux/content/action";
 const Content = () => {
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
+  const { user } = useSelector((store) => store.auth.data);
+  const { content, load } = useSelector((store) => store.content);
+  console.log(content);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const navigate = useNavigate();
   const showDrawer = () => {
@@ -21,17 +27,56 @@ const Content = () => {
   const onClose = () => {
     setOpen(false);
   };
-
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     title: "",
     class: "",
     subject: "",
     type: "",
-  });
-  const handleFormChange = () => {};
+    creator: user.name,
+  };
+  const [formData, setFormData] = useState(initialFormData);
+  const [loading, setLoading] = useState(false);
 
+  const [size, setSize] = useState("");
+  const [fileType, setFileType] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
+  const [thumbnailUrl, setThumbnailUrl] = useState("");
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
   const UploadRef = useRef();
   const WidgetRef = useRef();
+
+  const handleSubmit = () => {
+    for (let keys in formData) {
+      if (formData[keys] == "") {
+        return alert("please fill all the details");
+      }
+    }
+    if (size == "" || fileType == "" || fileUrl == "" || thumbnailUrl == "") {
+      return alert("Please choose a correct file type");
+    }
+    let obj = { ...formData, size, fileType, thumbnailUrl, fileUrl };
+    setLoading(true);
+    dispatch(createContent(obj)).then((res) => {
+      if (res.msg == "Error") {
+        setLoading(false);
+        messageApi.open({
+          type: "info",
+          content: "Error",
+          duration: 3,
+        });
+      } else {
+        setLoading(false);
+        onClose();
+        return messageApi.open({
+          type: "info",
+          content: "Quiz Created",
+          duration: 3,
+        });
+      }
+    });
+  };
 
   useEffect(() => {
     UploadRef.current = window.cloudinary;
@@ -42,11 +87,27 @@ const Content = () => {
         maxFiles: 1,
         clientAllowedFormats: ["pdf", "jpg", "jpeg", "mp4"],
         maxFileSize: 52445000,
+        thumbnailTransformation: [{ width: 240, height: 135, crop: "fill" }],
       },
       function (err, result) {
-        console.log(result.info);
+        if (result.info.secure_url) {
+          setFileUrl(result.info.secure_url);
+        }
+        if (result.info.bytes) {
+          setSize((result.info.bytes / 1000000).toFixed(3));
+        }
+        if (result.info.thumbnail_url) {
+          setThumbnailUrl(result.info.thumbnail_url);
+        }
+        if (result.info.format) {
+          setFileType(result.info.format);
+        }
       }
     );
+  }, []);
+
+  useEffect(() => {
+    dispatch(getContentData());
   }, []);
 
   useEffect(() => {
@@ -58,13 +119,12 @@ const Content = () => {
   return (
     <Navbar>
       <div className="content">
+        {contextHolder}
         <Header Title={"Contents"} Address={"Contents"} />
         <div className="contentData">
-          <ContentBox />
-          <ContentBox />
-          <ContentBox />
-          <ContentBox />
-          <ContentBox />
+          {content?.map((data, i) => {
+            return <ContentBox data={data} key={i} />;
+          })}
         </div>
         <div onClick={showDrawer}>
           <AddIcon />
@@ -78,9 +138,6 @@ const Content = () => {
           extra={
             <Space>
               <Button onClick={onClose}>Cancel</Button>
-              <Button onClick={onClose} type="primary">
-                Submit
-              </Button>
             </Space>
           }
         >
@@ -117,8 +174,60 @@ const Content = () => {
               <option value="Practice">Practice</option>
             </select>
           </form>
-          <button onClick={() => WidgetRef.current.open()}>Upload File</button>
+          {size ? (
+            <div className="uploadedImgDiv">
+              <p>File Type : {fileType}</p>
+              <p>File Size : {size} mb</p>
+              <p>Thumbnail :</p>
+              <img src={thumbnailUrl} alt="thumbnail" />
+            </div>
+          ) : (
+            ""
+          )}
+          <button
+            className="uploadBtn"
+            onClick={() => WidgetRef.current.open()}
+          >
+            Upload File
+          </button>
+          <button className="submitBtn" onClick={handleSubmit}>
+            Add Content
+          </button>
+          {loading ? (
+            <Space
+              style={{
+                width: "100vw",
+                height: "100vh",
+                position: "absolute",
+                backgroundColor: "rgba(0,0,0,0.2)",
+                top: "0",
+                left: "0",
+                display: "flex",
+                justifyContent: "center",
+                alignItem: "center",
+              }}
+            >
+              <Spin size="large"></Spin>
+            </Space>
+          ) : null}
         </Drawer>
+        {load ? (
+          <Space
+            style={{
+              width: "100vw",
+              height: "100vh",
+              position: "absolute",
+              backgroundColor: "rgba(0,0,0,0.2)",
+              top: "0",
+              left: "0",
+              display: "flex",
+              justifyContent: "center",
+              alignItem: "center",
+            }}
+          >
+            <Spin size="large"></Spin>
+          </Space>
+        ) : null}
       </div>
     </Navbar>
   );

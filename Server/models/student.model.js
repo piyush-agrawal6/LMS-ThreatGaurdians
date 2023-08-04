@@ -21,19 +21,21 @@ const studentSchema = mongoose.Schema(
     },
     class: {
       type: String,
-      // required: true,
+      required: true,
     },
     userType: {
       type: String,
       default: "Student",
     },
-    quiz: Array,
-    totalPoints: Number,
     premium: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "false",
     },
-    // averageTime: { type: TimeRanges },
+    totalPoints: { type: Number, default: 0 },
+    totalQuiz: { type: Number, default: 0 },
+    averageTime: { type: Number, default: 0 },
+    quizIds: [{ type: String }],
+    quizDetails: [{ type: Object }],
   },
   { versionKey: false, timestamps: true }
 );

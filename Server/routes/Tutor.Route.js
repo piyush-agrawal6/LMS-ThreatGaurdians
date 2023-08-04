@@ -3,11 +3,19 @@ const { TutorModel } = require("../models/Tutor.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const nodemailer = require("nodemailer");
 
-// **************** end points: "/tutor/register" for registering any new tutor ****************
+router.get("/all", async (req, res) => {
+  try {
+    const tutors = await TutorModel.find();
+    res.send({ message: "All tutor data", tutors });
+  } catch (error) {
+    res.status(400).send({ message: "Something went wrong" });
+  }
+});
+
 router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
-
+  const { name, email, password, subject } = req.body;
   try {
     let user = await TutorModel.find({ email });
     if (user.length > 0) {
@@ -23,10 +31,38 @@ router.post("/register", async (req, res) => {
           const tutor = new TutorModel({
             name,
             email,
+            subject,
             password: secure_password,
           });
           await tutor.save();
-          res.status(201).send({ msg: "Tutor Registered Successfully" });
+          let newTutor = await TutorModel.find({ email });
+
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+              user: "agrawaljoy1@gmail.com",
+              pass: "nsziioprjzwcodlm",
+            },
+          });
+
+          const mailOptions = {
+            from: "agrawaljoy1@gmail.com",
+            to: email,
+            subject: "Account ID and Password",
+            text: `Welcome to LMS, Congratulations,Your account has been created successfully.This is your User type : Tutor and Password : ${password}  `,
+          };
+
+          transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              return res.send({ msg: "error" });
+            }
+            res.send({ msg: "Password sent" });
+          });
+
+          res.send({
+            msg: "Tutor Registered Successfully",
+            tutor: newTutor[0],
+          });
         }
       }
     );
@@ -35,7 +71,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// **************** end points: "/tutor/login" for Login any exsiting Tutor ****************
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -69,40 +104,15 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// router.get("/", async (req, res) => {
-//   let query = req.query;
-//   try {
-//     const nurses = await NurseModel.find(query);
-//     res.status(200).send(nurses);
-//   } catch (error) {
-//     console.log(error);
-//     res.status(400).send({ error: "Something went wrong" });
-//   }
-// });
-
-// router.post("/register", async (req, res) => {
-//   const payload = req.body;
-//   try {
-//     const nurse = new NurseModel(payload);
-//     await nurse.save();
-//   } catch (error) {
-//     res.send("Something went wrong, unable to Register.");
-//     console.log(error);
-//   }
-//   res.send("Nurse Registered Successfully");
-// });
-
 router.patch("/:tutorId", async (req, res) => {
   const { tutorId } = req.params;
   const payload = req.body;
   try {
     const tutor = await TutorModel.findByIdAndUpdate({ _id: tutorId }, payload);
-    if (!tutor) {
-      res.status(404).send({ msg: `Tutor with id ${tutorId} not found` });
-    }
-    res.status(200).send(`Tutor with id ${tutorId} updated`);
+    const updatedTutor = await TutorModel.find({ _id: tutorId });
+    res.status(200).send({ msg: "Updated Tutor", tutor: updatedTutor[0] });
   } catch (error) {
-    res.status(404).send({ error: "Something went wrong, unable to Update." });
+    res.status(404).send({ msg: "Error" });
   }
 });
 
@@ -110,12 +120,9 @@ router.delete("/:tutorId", async (req, res) => {
   const { tutorId } = req.params;
   try {
     const tutor = await TutorModel.findByIdAndDelete({ _id: tutorId });
-    if (!tutor) {
-      res.status(404).send({ msg: `Tutor with id ${tutorId} not found` });
-    }
-    res.status(200).send(`Tutor with id ${tutorId} deleted`);
+    res.status(200).send({ msg: "Deleted Tutor" });
   } catch (error) {
-    res.status(404).send({ error: "Something went wrong, unable to Delete." });
+    res.status(404).send({ msg: "Error" });
   }
 });
 

@@ -2,81 +2,84 @@ import * as types from "./types";
 const initialState = {
   load: false,
   error: false,
-  admins: [],
+  students: [],
 };
-export default function adminReducer(state = initialState, { type, payload }) {
+export default function studentReducer(
+  state = initialState,
+  { type, payload }
+) {
   switch (type) {
-    case types.REGISTER_ADMIN_REQUEST:
+    case types.REGISTER_STUDENT_REQUEST:
       return {
         ...state,
         error: false,
       };
 
-    case types.REGISTER_ADMIN_SUCCESS:
+    case types.REGISTER_STUDENT_SUCCESS:
       return {
         ...state,
-        admins: [...state.admins, payload.admin],
+        students: [...state.students, payload.student],
       };
-    case types.REGISTER_ADMIN_REQUEST:
+    case types.REGISTER_STUDENT_ERROR:
       return {
         ...state,
         load: false,
         error: true,
       };
-    case types.GET_ADMIN_REQUEST:
+    case types.GET_STUDENT_REQUEST:
       return {
         ...state,
         load: true,
         error: false,
       };
-    case types.GET_ADMIN_SUCCESS:
+    case types.GET_STUDENT_SUCCESS:
       return {
         ...state,
-        admins: payload.admins,
+        students: payload.students,
         load: false,
       };
-    case types.GET_ADMIN_ERROR:
+    case types.GET_STUDENT_ERROR:
       return {
         ...state,
         load: false,
         error: true,
       };
-    case types.DELETE_ADMIN_REQUEST:
+    case types.DELETE_STUDENT_REQUEST:
       return {
         ...state,
         load: true,
         error: false,
       };
-    case types.DELETE_ADMIN_SUCCESS:
+    case types.DELETE_STUDENT_SUCCESS:
       return {
         ...state,
-        admins: [...state.admins.filter((elem) => elem._id != payload.adminId)],
+        students: [...state.students.filter((elem) => elem._id != payload.studentId)],
         load: false,
       };
-    case types.DELETE_ADMIN_ERROR:
+    case types.DELETE_STUDENT_ERROR:
       return {
         ...state,
         load: false,
         error: true,
       };
-    case types.EDIT_ADMIN_REQUEST:
+    case types.EDIT_STUDENT_REQUEST:
       return {
         ...state,
         load: true,
         error: false,
       };
-    case types.EDIT_ADMIN_SUCCESS:
+    case types.EDIT_STUDENT_SUCCESS:
       return {
         ...state,
-        admins: state.admins.map((elem) => {
+        students: state.students.map((elem) => {
           if (elem._id == payload.id) {
-            return payload.admin;
+            return payload.student;
           }
           return elem;
         }),
         load: false,
       };
-    case types.EDIT_ADMIN_ERROR:
+    case types.EDIT_STUDENT_ERROR:
       return {
         ...state,
         load: false,
