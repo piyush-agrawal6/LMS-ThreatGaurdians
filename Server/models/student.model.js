@@ -16,8 +16,8 @@ const studentSchema = mongoose.Schema(
       required: true,
     },
     access: {
-      type: Boolean,
-      default: true,
+      type: String,
+      default: "true",
     },
     class: {
       type: String,

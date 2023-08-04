@@ -11,6 +11,7 @@ export const adminRegister = (data) => async (dispatch) => {
       type: types.REGISTER_ADMIN_SUCCESS,
       payload: { admin: res.data.admin },
     });
+    console.log(res.data)
     return res.data;
   } catch (error) {
     dispatch({
@@ -52,10 +53,31 @@ export const deleteAdmin = (adminId) => async (dispatch) => {
       type: types.DELETE_ADMIN_SUCCESS,
       payload: { adminId },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.DELETE_ADMIN_ERROR,
+      payload: {
+        message: "error",
+      },
+    });
+    console.log(error);
+  }
+};
+
+//edit admin
+export const editAdmin = (adminId, data) => async (dispatch) => {
+  try {
+    console.log(adminId);
+    dispatch({ type: types.EDIT_ADMIN_REQUEST });
+    const res = await axios.patch(`${url}/admin/${adminId}`, data);
+    dispatch({
+      type: types.EDIT_ADMIN_SUCCESS,
+      payload: { id: adminId, admin: res.data.admin },
+    });
+    console.log(res.data);
+  } catch (error) {
+    dispatch({
+      type: types.EDIT_ADMIN_ERROR,
       payload: {
         message: "error",
       },

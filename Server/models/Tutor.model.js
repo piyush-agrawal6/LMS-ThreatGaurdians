@@ -20,8 +20,8 @@ const tutorSchema = mongoose.Schema(
       required: true,
     },
     access: {
-      type: Boolean,
-      default: true,
+      type: String,
+      default: "true",
     },
     userType: {
       type: String,

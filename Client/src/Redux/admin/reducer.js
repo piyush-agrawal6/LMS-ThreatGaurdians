@@ -60,6 +60,29 @@ export default function adminReducer(state = initialState, { type, payload }) {
         load: false,
         error: true,
       };
+    case types.EDIT_ADMIN_REQUEST:
+      return {
+        ...state,
+        load: true,
+        error: false,
+      };
+    case types.EDIT_ADMIN_SUCCESS:
+      return {
+        ...state,
+        admins: state.admins.map((elem) => {
+          if (elem._id == payload.id) {
+            return payload.admin;
+          }
+          return elem;
+        }),
+        load: false,
+      };
+    case types.EDIT_ADMIN_ERROR:
+      return {
+        ...state,
+        load: false,
+        error: true,
+      };
     default:
       return state;
   }

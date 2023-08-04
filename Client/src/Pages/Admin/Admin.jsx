@@ -67,6 +67,11 @@ const Admin = () => {
             content: "Admin Registered Successfully",
             duration: 3,
           });
+          messageApi.open({
+            type: "success",
+            content: "Password sent over mail",
+            duration: 3,
+          });
         }
       })
       .catch((error) => {

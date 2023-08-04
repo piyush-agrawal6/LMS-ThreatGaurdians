@@ -42,6 +42,9 @@ router.post("/login", async (req, res) => {
   try {
     const student = await StudentModel.find({ email });
     if (student.length > 0) {
+      if (student[0].access == "false") {
+        return res.send({ message: "Access Denied" });
+      }
       bcrypt.compare(password, student[0].password, (err, results) => {
         if (results) {
           let token = jwt.sign(
