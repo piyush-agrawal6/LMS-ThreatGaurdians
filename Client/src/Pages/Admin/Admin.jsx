@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
-import "./Admin.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+//components
 import Navbar from "../../Components/Sidebar/Navbar";
 import Table from "../../Components/Table/Table";
 import AddIcon from "../../Components/AddIcon/AddIcon";
-import { Button, Drawer } from "antd";
 import Header from "../../Components/Header/Header";
-import { useDispatch, useSelector } from "react-redux";
-import { adminRegister, getAdminData } from "../../Redux/admin/action";
-import { useNavigate } from "react-router-dom";
-import { message, Space, Spin } from "antd";
 
+//redux
+import { adminRegister, getAdminData } from "../../Redux/admin/action";
+
+// css library
+import { message, Space, Spin } from "antd";
+import { Button, Drawer } from "antd";
+
+//css imports
+import "./Admin.css";
+
+// form stat
 const initialFormData = {
   name: "",
   email: "",
@@ -17,20 +26,33 @@ const initialFormData = {
 };
 
 const Admin = () => {
-  const [FormData, setFormData] = useState(initialFormData);
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [messageApi, contextHolder] = message.useMessage();
-  const [open, setOpen] = useState(false);
-  const {
-    data: { isAuthenticated },
-  } = useSelector((store) => store.auth);
-  const { admins, load } = useSelector((store) => store.admin);
   const navigate = useNavigate();
 
+  //loading state
+  const [loading, setLoading] = useState(false);
+
+  //alert api
+  const [messageApi, contextHolder] = message.useMessage();
+
+  //redux states
+  const {
+    data: {
+      isAuthenticated,
+      token,
+      user: { userType },
+    },
+  } = useSelector((store) => store.auth);
+  const { admins, load } = useSelector((store) => store.admin);
+
+  //form states and functions
+  const [FormData, setFormData] = useState(initialFormData);
   const handleInputChange = (e) => {
     setFormData({ ...FormData, [e.target.name]: e.target.value });
   };
+
+  //drawer states and functions
+  const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -38,6 +60,7 @@ const Admin = () => {
     setOpen(false);
   };
 
+  // create admin function
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -80,7 +103,7 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    dispatch(getAdminData());
+    dispatch(getAdminData(token, userType));
   }, []);
 
   useEffect(() => {
@@ -92,13 +115,20 @@ const Admin = () => {
   return (
     <Navbar>
       <div className="admin">
+        {/* header component  */}
         <Header Title={"Admin Data"} Address={"Admin"} />
+
+        {/* table component  */}
         <div className="adminData">
           <Table Data={admins} />
         </div>
+
+        {/* drawer component  */}
         <div onClick={showDrawer}>
           <AddIcon />
         </div>
+
+        {/* side drawer  */}
         <Drawer
           title="Create a new account"
           width={720}
@@ -111,7 +141,6 @@ const Admin = () => {
             </Space>
           }
         >
-          {contextHolder}
           <form onSubmit={(e) => handleSubmit(e)}>
             <input
               required
@@ -139,6 +168,9 @@ const Admin = () => {
             />
             <input type="submit" value="Add Admin" />
           </form>
+
+          {/*main loading indicator  */}
+          {contextHolder}
           {loading ? (
             <Space
               style={{
@@ -157,6 +189,8 @@ const Admin = () => {
             </Space>
           ) : null}
         </Drawer>
+
+        {/*drawer loading indicator  */}
         {load ? (
           <Space
             style={{

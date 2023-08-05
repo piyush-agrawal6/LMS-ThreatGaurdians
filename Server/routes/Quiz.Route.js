@@ -1,7 +1,10 @@
 const express = require("express");
-const { QuizModel } = require("../models/quiz.model");
 const router = express.Router();
 
+//model import
+const { QuizModel } = require("../models/quiz.model");
+
+//get all quiz data
 router.get("/all", async (req, res) => {
   try {
     const quizzes = await QuizModel.find();
@@ -11,6 +14,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
+//create new quiz
 router.post("/create", async (req, res) => {
   try {
     const quiz = new QuizModel(req.body);
@@ -21,6 +25,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
+//edit quiz
 router.patch("/:quizId", async (req, res) => {
   const { quizId } = req.params;
   const payload = req.body;
@@ -33,6 +38,7 @@ router.patch("/:quizId", async (req, res) => {
   }
 });
 
+//delete quiz
 router.delete("/:quizId", async (req, res) => {
   const { quizId } = req.params;
   try {

@@ -1,40 +1,44 @@
 import React, { useEffect, useState } from "react";
-import "./Student.css";
-import Navbar from "../../Components/Sidebar/Navbar";
-import AddIcon from "../../Components/AddIcon/AddIcon";
-import {
-  Button,
-  Drawer,
-  Space,
-  Spin,
-  message,
-} from "antd";
-import Header from "../../Components/Header/Header";
-import StudentRow from "../../Components/Table/studentRow";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getStudentData, studentRegister } from "../../Redux/student/action";
+
+//component imports
+import Header from "../../Components/Header/Header";
+import Navbar from "../../Components/Sidebar/Navbar";
+import AddIcon from "../../Components/AddIcon/AddIcon";
+import StudentRow from "../../Components/Table/studentRow";
+
+//css imports
+import { Button, Drawer, Space, Spin, message } from "antd";
+import "./Student.css";
+
 const Student = () => {
-  const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //alert api
   const [messageApi, contextHolder] = message.useMessage();
 
+  //loading state
+  const [loading, setLoading] = useState(false);
+
+  //redux states
+  const {
+    data: { isAuthenticated },
+  } = useSelector((store) => store.auth);
+  const { students, load } = useSelector((store) => store.student);
+
+  //drawer states
+  const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
   };
 
-  const dispatch = useDispatch();
-  const {
-    data: { isAuthenticated },
-  } = useSelector((store) => store.auth);
-  const navigate = useNavigate();
-  const { students, load } = useSelector((store) => store.student);
-
-  const [loading, setLoading] = useState(false);
-
+//form states and functions
   const initialFormData = {
     name: "",
     email: "",
@@ -45,6 +49,8 @@ const Student = () => {
   const handleInputChange = (e) => {
     setFormData({ ...FormData, [e.target.name]: e.target.value });
   };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (FormData.class == "") {

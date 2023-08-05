@@ -13,7 +13,6 @@ export const tutorRegister = (data) => async (dispatch) => {
         payload: { tutor: res.data.tutor },
       });
     }
-    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -22,7 +21,6 @@ export const tutorRegister = (data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -35,7 +33,6 @@ export const getTutorData = () => async (dispatch) => {
       type: types.GET_TUTOR_SUCCESS,
       payload: { tutors: res.data.tutors },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.GET_TUTOR_ERROR,
@@ -43,7 +40,6 @@ export const getTutorData = () => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -63,21 +59,18 @@ export const deleteTutor = (tutorId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
 //edit tutor
 export const editTutor = (tutorId, data) => async (dispatch) => {
   try {
-    console.log(tutorId);
     dispatch({ type: types.EDIT_TUTOR_REQUEST });
     const res = await axios.patch(`${url}/tutor/${tutorId}`, data);
     dispatch({
       type: types.EDIT_TUTOR_SUCCESS,
       payload: { id: tutorId, tutor: res.data.tutor },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.EDIT_TUTOR_ERROR,
@@ -85,6 +78,5 @@ export const editTutor = (tutorId, data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };

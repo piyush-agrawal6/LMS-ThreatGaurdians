@@ -1,35 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Doubts.css";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createDoubt, getDoubtData } from "../../Redux/doubt/action";
+
+//component imports
 import Navbar from "../../Components/Sidebar/Navbar";
 import Header from "../../Components/Header/Header";
 import AddIcon from "../../Components/AddIcon/AddIcon";
-import { Button, Drawer, Space, Spin, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { createDoubt, getDoubtData } from "../../Redux/doubt/action";
 import DoubtBox from "../../Components/DoubtBox/DoubtBox";
 
+//css imports
+import { Button, Drawer, Space, Spin, message } from "antd";
+import "./Doubts.css";
+
 const Doubts = () => {
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //redux states
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
   const { user } = useSelector((store) => store.auth.data);
   const { doubt, load } = useSelector((store) => store.doubt);
-  console.log(doubt);
+
+  //alert api antd
   const [messageApi, contextHolder] = message.useMessage();
 
-  const navigate = useNavigate();
+  //loading state
+  const [loading, setLoading] = useState(false);
 
+  //drawer states and functions
+  const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
   };
 
+  //form states and functions
   const initialFormData = {
     title: "",
     description: "",
@@ -38,17 +48,18 @@ const Doubts = () => {
     name: user?.name,
     studentId: user?._id,
   };
-
   const [formData, setFormData] = useState(initialFormData);
-  const [loading, setLoading] = useState(false);
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
+  //upload states
   const [size, setSize] = useState("");
   const [fileType, setFileType] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+
+  //upload refs
   const UploadRef = useRef();
   const WidgetRef = useRef();
 
@@ -84,6 +95,7 @@ const Doubts = () => {
     });
   };
 
+  //cloudinary upload settings
   useEffect(() => {
     UploadRef.current = window.cloudinary;
     WidgetRef.current = UploadRef.current.createUploadWidget(
@@ -125,8 +137,8 @@ const Doubts = () => {
   return (
     <Navbar>
       <div className="content">
-        {contextHolder}
         <Header Title={"Doubts"} Address={"Doubts"} />
+
         <h3>Unsolved Doubts</h3>
         <div className="contentData">
           {doubt
@@ -144,9 +156,12 @@ const Doubts = () => {
               return <DoubtBox data={data} key={i} />;
             })}
         </div>
+
         <div onClick={showDrawer}>
           <AddIcon />
         </div>
+
+        {/* drawer  */}
         <Drawer
           title="Create a new account"
           width={720}
@@ -212,6 +227,8 @@ const Doubts = () => {
           <button className="submitBtn" onClick={handleSubmit}>
             Add Content
           </button>
+
+          {/* drawer loading indicator */}
           {loading ? (
             <Space
               style={{
@@ -230,6 +247,9 @@ const Doubts = () => {
             </Space>
           ) : null}
         </Drawer>
+
+        {/* main loading indicator  */}
+        {contextHolder}
         {load ? (
           <Space
             style={{

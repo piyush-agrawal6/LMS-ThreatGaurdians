@@ -57,6 +57,7 @@
 }
 
 /* Top Bar */
+
 #content {
   position: relative;
   width: calc(100% - 280px);
@@ -68,7 +69,6 @@
   left: 60px;
 }
 
-/* NAVBAR */
 #content nav {
   height: 75px;
   background: white;
@@ -167,6 +167,7 @@
 }
 
 /* media queries */
+
 @media screen and (max-width: 768px) {
   #sidebar {
     width: 200px;

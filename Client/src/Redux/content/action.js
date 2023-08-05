@@ -4,7 +4,6 @@ import url from "../../BackendURL.js";
 
 //create content
 export const createContent = (data) => async (dispatch) => {
-  console.log("called")
   try {
     dispatch({ type: types.CREATE_CONTENT_REQUEST });
     const res = await axios.post(`${url}/content/create`, data);
@@ -12,7 +11,6 @@ export const createContent = (data) => async (dispatch) => {
       type: types.CREATE_CONTENT_SUCCESS,
       payload: { content: res.data.content },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -21,7 +19,6 @@ export const createContent = (data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -34,7 +31,6 @@ export const getContentData = () => async (dispatch) => {
       type: types.GET_CONTENT_SUCCESS,
       payload: { content: res.data.content },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.GET_CONTENT_ERROR,
@@ -42,7 +38,6 @@ export const getContentData = () => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -55,7 +50,6 @@ export const getSingleContentData = (contentId) => async (dispatch) => {
       type: types.GET_SINGLE_CONTENT_SUCCESS,
       payload: { content: res.data.content },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.GET_SINGLE_CONTENT_ERROR,
@@ -63,7 +57,6 @@ export const getSingleContentData = (contentId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -83,6 +76,5 @@ export const deleteContent = (contentId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };

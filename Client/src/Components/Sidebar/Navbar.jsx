@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { authLogout } from "../../Redux/auth/action";
+import Menu from "../Menu/Menu";
+import { Dropdown } from "antd";
 
 // Image imports
 import user from "../../Assets/useravatar.png";
-import logo from "../../Assets/logo2.png";
+import logo from "../../Assets/logo.png";
 
 // Icon imports
 import { BiLogOut, BiUserVoice } from "react-icons/bi";
@@ -11,32 +15,30 @@ import { TbLayoutGridAdd, TbUsers, TbBrandSpeedtest } from "react-icons/tb";
 import { LuLayoutGrid } from "react-icons/lu";
 import { PiStudentDuotone } from "react-icons/pi";
 import { HiOutlineHome } from "react-icons/hi";
-import { BsBell, BsBookmarkCheck } from "react-icons/bs";
 import { GoChevronDown } from "react-icons/go";
 import { RiAdminLine } from "react-icons/ri";
-import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { AiOutlineQuestion } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+
 // CSS imports
 import "./Navbar.css";
-import Menu from "../Menu/Menu";
-import { Dropdown } from "antd";
-import { authLogout } from "../../Redux/auth/action";
 
 const Navbar = ({ children }) => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //redux state
   const auth = useSelector((store) => store.auth);
   if (!auth.data.isAuthenticated) {
     return navigate("/");
   }
-
   const {
     user: { userType, name, premium },
   } = useSelector((store) => store.auth.data);
 
   //Sidebar toggle state
   const [toggle, setToggle] = useState(true);
+
   //Sidebar menu
   const adminData = [
     { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
@@ -54,7 +56,7 @@ const Navbar = ({ children }) => {
     { icon: <AiOutlineQuestion />, title: "Doubts", address: "/doubts" },
     // { icon: <TbMessages />, title: "Message", address: "/messages" },
     { icon: <TbUsers />, title: "Leader Board", address: "/leaderboard" },
-    { icon: <BsBookmarkCheck />, title: "Bookmarks", address: "/bookmarks" },
+    // { icon: <BsBookmarkCheck />, title: "Bookmarks", address: "/bookmarks" },
   ];
   const tutorData = [
     { icon: <HiOutlineHome />, title: "Dashboard", address: "/home" },
@@ -69,15 +71,12 @@ const Navbar = ({ children }) => {
   // Dropdown menu
   const items = [
     {
-      key: "3",
-      label: <Link>Change Password</Link>,
-    },
-    {
       key: "1",
       label: <span onClick={() => handleLogout()}>Logout</span>,
     },
   ];
 
+  //logout function
   const handleLogout = () => {
     dispatch(authLogout());
   };
@@ -86,7 +85,6 @@ const Navbar = ({ children }) => {
     <>
       {/* Side Bar */}
       <div id="sidebar" className={toggle ? "hide" : ""}>
-        {/* Side bar logo */}
         <Link href="/" className="logo">
           <div className="logoBox">
             <img src={logo} alt="logo" />
@@ -135,7 +133,7 @@ const Navbar = ({ children }) => {
                 );
               })
             : ""}
-          {userType == "Student" && premium == "false" ? (
+          {/* {userType == "Student" && premium == "false" ? (
             <Menu
               Icon={<MdOutlineWorkspacePremium />}
               Title={"Premium"}
@@ -143,7 +141,7 @@ const Navbar = ({ children }) => {
             />
           ) : (
             ""
-          )}
+          )} */}
           <span onClick={() => handleLogout()}>
             <Menu Icon={<BiLogOut />} Title={"Logout"} Address={""} />
           </span>
@@ -173,10 +171,10 @@ const Navbar = ({ children }) => {
             )}
           </div>
           <div>
-            <Link href="/" className="notification">
+            {/* <Link href="/" className="notification">
               <BsBell />
               <span className="num number">4</span>
-            </Link>
+            </Link> */}
             <Dropdown menu={{ items }} placement="bottomLeft" arrow>
               <Link href="/" className="profile">
                 <img src={user} />

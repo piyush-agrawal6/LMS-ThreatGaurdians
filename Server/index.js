@@ -1,12 +1,16 @@
+//imports
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const { connection } = require("./configs/db");
-require("dotenv").config();
 const cors = require("cors");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
+
+//port
 const PORT = process.env.port || 8080;
 
+//routes imports
 const adminRouter = require("./routes/Admins.Route");
 const studentRouter = require("./routes/Student.Route");
 const tutorRouter = require("./routes/Tutor.Route");
@@ -18,10 +22,10 @@ app.use(express.text());
 app.use(express.json());
 app.use(cors());
 
+//routes
 app.get("/", (req, res) => {
   res.send("Home Route");
 });
-
 app.use("/admin", adminRouter);
 app.use("/tutor", tutorRouter);
 app.use("/student", studentRouter);
@@ -29,6 +33,7 @@ app.use("/quiz", quizRouter);
 app.use("/content", contentRouter);
 app.use("/doubt", DoubtRouter);
 
+//app listening
 app.listen(PORT, async () => {
   try {
     await connection;

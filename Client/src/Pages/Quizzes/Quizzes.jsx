@@ -179,10 +179,13 @@ const Quizzes = () => {
             return <Quiz data={data} key={i} />;
           })}
         </div>
-        <div onClick={showDrawer}>
-          <AddIcon />
-        </div>
-
+        {user?.userType !== "Student" ? (
+          <div onClick={showDrawer}>
+            <AddIcon />
+          </div>
+        ) : (
+          ""
+        )}
         <Drawer
           title="Create Quiz"
           width={520}

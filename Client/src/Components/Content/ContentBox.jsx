@@ -1,19 +1,23 @@
 import React from "react";
-import "./ContentBox.css";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteContent } from "../../Redux/content/action";
 import { useNavigate } from "react-router-dom";
+import { deleteContent } from "../../Redux/content/action";
+
+import "./ContentBox.css";
 
 const ContentBox = ({ data }) => {
-  const { user } = useSelector((store) => store.auth.data);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { user } = useSelector((store) => store.auth.data);
+
   const handleDelete = (id) => {
     dispatch(deleteContent(id));
   };
   const handleClick = (id) => {
     return navigate(`/content/${id}`);
   };
+  
   return (
     <div className="contentDiv">
       <div>

@@ -16,7 +16,7 @@
   width: 43%;
 }
 .loginImage img {
-  width: 100%;
+  width: 85%;
   margin-left: 1rem;
 }
 .loginDetail {
@@ -87,6 +87,7 @@ input[type="submit"] {
     width: 100%;
   }
 }
+
 @media (max-width: 570px) {
   .login {
     padding-top: 0rem;
@@ -101,6 +102,7 @@ input[type="submit"] {
     font-size: 14px;
   }
 }
+
 @media (max-width: 350px) {
   .login {
     background-color: white;

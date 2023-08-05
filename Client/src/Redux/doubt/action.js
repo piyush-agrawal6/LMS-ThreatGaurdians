@@ -4,7 +4,6 @@ import url from "../../BackendURL.js";
 
 //create doubt
 export const createDoubt = (data) => async (dispatch) => {
-  console.log("called");
   try {
     dispatch({ type: types.CREATE_DOUBT_REQUEST });
     const res = await axios.post(`${url}/doubt/create`, data);
@@ -12,7 +11,6 @@ export const createDoubt = (data) => async (dispatch) => {
       type: types.CREATE_DOUBT_SUCCESS,
       payload: { doubt: res.data.doubt },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -21,13 +19,11 @@ export const createDoubt = (data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
 //add response
 export const addResponse = (id, desc) => async (dispatch) => {
-  console.log("called");
   try {
     dispatch({ type: types.ADD_DOUBT_RESPONSE_REQUEST });
     const res = await axios.post(`${url}/doubt/add`, { id, desc });
@@ -35,7 +31,6 @@ export const addResponse = (id, desc) => async (dispatch) => {
       type: types.ADD_DOUBT_RESPONSE_SUCCESS,
       payload: { doubt: res.data.doubt },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.ADD_DOUBT_RESPONSE_ERROR,
@@ -43,13 +38,11 @@ export const addResponse = (id, desc) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
 //get all doubts data
 export const getDoubtData = () => async (dispatch) => {
-  console.log("called");
   try {
     dispatch({ type: types.GET_DOUBT_REQUEST });
     const res = await axios.get(`${url}/doubt/all`);
@@ -57,7 +50,6 @@ export const getDoubtData = () => async (dispatch) => {
       type: types.GET_DOUBT_SUCCESS,
       payload: { doubt: res.data.doubt },
     });
-    console.log(res.data.doubt);
   } catch (error) {
     dispatch({
       type: types.GET_DOUBT_ERROR,
@@ -65,7 +57,6 @@ export const getDoubtData = () => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -78,7 +69,6 @@ export const getSingleDoubtData = (doubtId) => async (dispatch) => {
       type: types.GET_SINGLE_DOUBT_SUCCESS,
       payload: { doubt: res.data.doubt },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.GET_SINGLE_DOUBT_ERROR,
@@ -86,7 +76,6 @@ export const getSingleDoubtData = (doubtId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -106,7 +95,6 @@ export const deleteDoubt = (doubtId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -121,7 +109,6 @@ export const resolveDoubt = (doubtId) => async (dispatch) => {
       type: types.RESOLVE_DOUBT_SUCCESS,
       payload: { id: doubtId, doubt: res.data.doubt },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.RESOLVE_DOUBT_ERROR,
@@ -129,6 +116,5 @@ export const resolveDoubt = (doubtId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };

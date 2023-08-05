@@ -4,7 +4,6 @@ import url from "../../BackendURL.js";
 
 //register student
 export const studentRegister = (data) => async (dispatch) => {
-  console.log(data);
   try {
     dispatch({ type: types.REGISTER_STUDENT_REQUEST });
     const res = await axios.post(`${url}/student/register`, data);
@@ -14,7 +13,6 @@ export const studentRegister = (data) => async (dispatch) => {
         payload: { student: res.data.student },
       });
     }
-    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -23,7 +21,6 @@ export const studentRegister = (data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -36,7 +33,6 @@ export const getStudentData = () => async (dispatch) => {
       type: types.GET_STUDENT_SUCCESS,
       payload: { students: res.data.students },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.GET_STUDENT_ERROR,
@@ -44,7 +40,6 @@ export const getStudentData = () => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -64,21 +59,18 @@ export const deleteStudent = (studentId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
 //edit student
 export const editStudent = (studentId, data) => async (dispatch) => {
   try {
-    console.log(studentId);
     dispatch({ type: types.EDIT_STUDENT_REQUEST });
     const res = await axios.patch(`${url}/student/${studentId}`, data);
     dispatch({
       type: types.EDIT_STUDENT_SUCCESS,
       payload: { id: studentId, student: res.data.student },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.EDIT_STUDENT_ERROR,
@@ -86,6 +78,5 @@ export const editStudent = (studentId, data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
