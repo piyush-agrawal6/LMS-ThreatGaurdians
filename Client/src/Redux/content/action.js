@@ -46,6 +46,27 @@ export const getContentData = () => async (dispatch) => {
   }
 };
 
+//get single content data
+export const getSingleContentData = (contentId) => async (dispatch) => {
+  try {
+    dispatch({ type: types.GET_SINGLE_CONTENT_REQUEST });
+    const res = await axios.get(`${url}/content/${contentId}`);
+    dispatch({
+      type: types.GET_SINGLE_CONTENT_SUCCESS,
+      payload: { content: res.data.content },
+    });
+    console.log(res.data);
+  } catch (error) {
+    dispatch({
+      type: types.GET_SINGLE_CONTENT_ERROR,
+      payload: {
+        message: "error",
+      },
+    });
+    console.log(error);
+  }
+};
+
 //delete content
 export const deleteContent = (contentId) => async (dispatch) => {
   try {
