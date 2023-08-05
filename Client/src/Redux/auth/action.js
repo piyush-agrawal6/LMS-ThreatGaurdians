@@ -1,7 +1,8 @@
 import * as types from "./types";
 import axios from "axios";
 import url from "../../BackendURL.js";
-//login user
+
+//login admin
 export const adminLogin = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.LOGIN_ADMIN_REQUEST });
@@ -14,7 +15,6 @@ export const adminLogin = (data) => async (dispatch) => {
         token: res.data.token,
       },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -26,13 +26,11 @@ export const adminLogin = (data) => async (dispatch) => {
   }
 };
 
-//login user
+//login tutor
 export const tutorLogin = (data) => async (dispatch) => {
-  console.log(data);
   try {
     dispatch({ type: types.LOGIN_TUTOR_REQUEST });
     const res = await axios.post(`${url}/tutor/login`, data);
-    console.log(res.data);
     dispatch({
       type: types.LOGIN_TUTOR_SUCCESS,
       payload: {
@@ -52,13 +50,11 @@ export const tutorLogin = (data) => async (dispatch) => {
   }
 };
 
-//login user
+//login student
 export const studentLogin = (data) => async (dispatch) => {
-  console.log(data);
   try {
     dispatch({ type: types.LOGIN_STUDENT_REQUEST });
     const res = await axios.post(`${url}/student/login`, data);
-    console.log(res.data);
     dispatch({
       type: types.LOGIN_STUDENT_SUCCESS,
       payload: {
@@ -80,7 +76,6 @@ export const studentLogin = (data) => async (dispatch) => {
 
 // logout user
 export const authLogout = () => async (dispatch) => {
-  console.log("called");
   try {
     dispatch({
       type: types.AUTH_LOGOUT,

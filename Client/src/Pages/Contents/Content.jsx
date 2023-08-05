@@ -1,32 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./Content.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { createContent, getContentData } from "../../Redux/content/action";
+
+//components
 import Navbar from "../../Components/Sidebar/Navbar";
 import Header from "../../Components/Header/Header";
 import ContentBox from "../../Components/Content/ContentBox";
 import AddIcon from "../../Components/AddIcon/AddIcon";
+
+//css imports
 import { Button, Drawer, Space, Spin, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { createContent, getContentData } from "../../Redux/content/action";
+import "./Content.css";
+
 const Content = () => {
-  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  //redux states
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
   const { user } = useSelector((store) => store.auth.data);
   const { content, load } = useSelector((store) => store.content);
-  console.log(content);
+
+  //loading state
+  const [loading, setLoading] = useState(false);
+
+  //alert api
   const [messageApi, contextHolder] = message.useMessage();
 
-  const navigate = useNavigate();
+  //drawer states and functions
+  const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
-
   const onClose = () => {
     setOpen(false);
   };
+
+  //form states and functions
   const initialFormData = {
     title: "",
     class: "",
@@ -34,20 +47,22 @@ const Content = () => {
     type: "",
     creator: user?.name,
   };
-
   const [formData, setFormData] = useState(initialFormData);
-  const [loading, setLoading] = useState(false);
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
+  //upload file states
   const [size, setSize] = useState("");
   const [fileType, setFileType] = useState("");
   const [fileUrl, setFileUrl] = useState("");
   const [thumbnailUrl, setThumbnailUrl] = useState("");
-  const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+
+  //upload refs
   const UploadRef = useRef();
   const WidgetRef = useRef();
 
+  //upload and add content function
   const handleSubmit = () => {
     for (let keys in formData) {
       if (formData[keys] == "") {
@@ -79,6 +94,7 @@ const Content = () => {
     });
   };
 
+  // cloudinary upload settings
   useEffect(() => {
     UploadRef.current = window.cloudinary;
     WidgetRef.current = UploadRef.current.createUploadWidget(
@@ -120,16 +136,26 @@ const Content = () => {
   return (
     <Navbar>
       <div className="content">
-        {contextHolder}
+        {/* header component */}
         <Header Title={"Contents"} Address={"Contents"} />
+
+        {/* content component */}
         <div className="contentData">
           {content?.map((data, i) => {
             return <ContentBox data={data} key={i} />;
           })}
         </div>
-        <div onClick={showDrawer}>
-          <AddIcon />
-        </div>
+
+        {/* drawer component  */}
+        {user.userType !== "Student" ? (
+          <div onClick={showDrawer}>
+            <AddIcon />
+          </div>
+        ) : (
+          ""
+        )}
+
+        {/* create content drawer */}
         <Drawer
           title="Create a new account"
           width={720}
@@ -194,6 +220,8 @@ const Content = () => {
           <button className="submitBtn" onClick={handleSubmit}>
             Add Content
           </button>
+
+          {/* drawer loading indicator  */}
           {loading ? (
             <Space
               style={{
@@ -212,6 +240,9 @@ const Content = () => {
             </Space>
           ) : null}
         </Drawer>
+
+        {/* main loading indicator  */}
+        {contextHolder}
         {load ? (
           <Space
             style={{

@@ -1,43 +1,37 @@
 import React, { useEffect, useState } from "react";
-import "./SingleDoubt.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addResponse, getSingleDoubtData } from "../../Redux/doubt/action";
+
+// component imports
 import Navbar from "../../Components/Sidebar/Navbar";
 import Header from "../../Components/Header/Header";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { addResponse, getSingleDoubtData } from "../../Redux/doubt/action";
+
+//css imports
 import { Space, Spin } from "antd";
+import "./SingleDoubt.css";
 
 const SingleDoubt = () => {
   const dispatch = useDispatch();
+  const params = useParams();
+  const navigate = useNavigate();
+
+  // redux states
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
-
   const { singleDoubt, load } = useSelector((store) => store.doubt);
 
+  //form states
   const [desc, setDesc] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addResponse(singleDoubt?._id, desc));
   };
-  const params = useParams();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getSingleDoubtData(params.id));
     setDesc("");
-  }, []);
-
-  useEffect(() => {
-    const handleContextmenu = (e) => {
-      e.preventDefault();
-    };
-    document.addEventListener("contextmenu", handleContextmenu);
-    return function cleanup() {
-      document.removeEventListener("contextmenu", handleContextmenu);
-    };
   }, []);
 
   useEffect(() => {

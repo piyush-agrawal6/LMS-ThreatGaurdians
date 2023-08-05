@@ -13,8 +13,6 @@ export const adminRegister = (data) => async (dispatch) => {
         payload: { admin: res.data.admin },
       });
     }
-
-    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -23,15 +21,19 @@ export const adminRegister = (data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
 //get all admins data
-export const getAdminData = () => async (dispatch) => {
+export const getAdminData = (token, role) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_ADMIN_REQUEST });
-    const res = await axios.get(`${url}/admin/all`);
+    const res = await axios.get(
+      `${url}/admin/all`,
+      {
+        headers: { token: token },
+      }
+    );
     dispatch({
       type: types.GET_ADMIN_SUCCESS,
       payload: { admins: res.data.admins },
@@ -43,7 +45,6 @@ export const getAdminData = () => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -63,21 +64,18 @@ export const deleteAdmin = (adminId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
 //edit admin
 export const editAdmin = (adminId, data) => async (dispatch) => {
   try {
-    console.log(adminId);
     dispatch({ type: types.EDIT_ADMIN_REQUEST });
     const res = await axios.patch(`${url}/admin/${adminId}`, data);
     dispatch({
       type: types.EDIT_ADMIN_SUCCESS,
       payload: { id: adminId, admin: res.data.admin },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.EDIT_ADMIN_ERROR,
@@ -85,6 +83,5 @@ export const editAdmin = (adminId, data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };

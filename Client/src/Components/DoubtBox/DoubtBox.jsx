@@ -1,14 +1,16 @@
 import React from "react";
-import "./DoubtBox.css";
-import { useDispatch, useSelector } from "react-redux";
-import { deleteContent } from "../../Redux/content/action";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteDoubt, resolveDoubt } from "../../Redux/doubt/action";
 
+import "./DoubtBox.css";
+
 const DoubtBox = ({ data }) => {
-  const { user } = useSelector((store) => store.auth.data);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((store) => store.auth.data);
+
   const handleDelete = (id) => {
     dispatch(deleteDoubt(id));
   };
@@ -18,6 +20,7 @@ const DoubtBox = ({ data }) => {
   const handleResolve = (id) => {
     dispatch(resolveDoubt(id));
   };
+  
   return (
     <div className="contentDiv">
       <div>

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
-import { Modal, message, Popconfirm, Button } from "antd";
 import { useDispatch } from "react-redux";
 import { deleteTutor, editTutor } from "../../Redux/tutor/action";
 
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Modal, message, Popconfirm, Button } from "antd";
+
 const TutorRow = ({ data }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+
+  //form states
   const initialAdminData = {
     name: data.name,
     access: data.access,
@@ -16,24 +18,26 @@ const TutorRow = ({ data }) => {
   const handleAdminDataChange = (e) => {
     setAdminFormData({ ...adminFormData, [e.target.name]: e.target.value });
   };
+
+  //drawer states
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const cancel = () => {
+    message.error("Click on No");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(editTutor(data._id, adminFormData));
     setAdminFormData(initialAdminData);
     handleCancel();
   };
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const cancel = () => {
-    message.error("Click on No");
-  };
-
+  
   const handleDelete = (id) => {
     dispatch(deleteTutor(id));
   };

@@ -1,7 +1,10 @@
 const express = require("express");
-const { DoubtModel } = require("../models/doubt.model");
 const router = express.Router();
 
+//model import
+const { DoubtModel } = require("../models/doubt.model");
+
+//get all doubts data 
 router.get("/all", async (req, res) => {
   try {
     const doubt = await DoubtModel.find();
@@ -11,6 +14,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
+//get single doubt
 router.get("/:doubtId", async (req, res) => {
   const { doubtId } = req.params;
   try {
@@ -21,6 +25,7 @@ router.get("/:doubtId", async (req, res) => {
   }
 });
 
+//create new doubt
 router.post("/create", async (req, res) => {
   try {
     const doubt = new DoubtModel(req.body);
@@ -31,6 +36,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
+// add response to doubts
 router.post("/add", async (req, res) => {
   try {
     const doubt = await DoubtModel.findById(req.body.id);
@@ -43,6 +49,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
+//edit doubt
 router.patch("/:doubtId", async (req, res) => {
   const { doubtId } = req.params;
   const payload = req.body;
@@ -55,23 +62,12 @@ router.patch("/:doubtId", async (req, res) => {
   }
 });
 
+//delete doubt
 router.delete("/:doubtId", async (req, res) => {
   const { doubtId } = req.params;
   try {
     const doubt = await DoubtModel.findByIdAndDelete({ _id: doubtId });
     res.status(200).send({ msg: "Deleted doubt" });
-  } catch (error) {
-    res.status(404).send({ msg: "Error" });
-  }
-});
-
-router.patch("/:doubtId", async (req, res) => {
-  const { doubtId } = req.params;
-  const payload = req.body;
-  try {
-    const doubt = await DoubtModel.findByIdAndUpdate({ _id: doubtId }, payload);
-    const updatedDoubt = await DoubtModel.find({ _id: doubtId });
-    res.status(200).send({ msg: "Updated Doubt", tutor: updatedDoubt[0] });
   } catch (error) {
     res.status(404).send({ msg: "Error" });
   }

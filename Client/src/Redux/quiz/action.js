@@ -11,7 +11,6 @@ export const createQuiz = (data) => async (dispatch) => {
       type: types.CREATE_QUIZ_SUCCESS,
       payload: { quiz: res.data.quiz },
     });
-    console.log(res.data);
     return res.data;
   } catch (error) {
     dispatch({
@@ -20,7 +19,6 @@ export const createQuiz = (data) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -33,7 +31,6 @@ export const getQuizData = () => async (dispatch) => {
       type: types.GET_QUIZ_SUCCESS,
       payload: { quiz: res.data.quizzes },
     });
-    console.log(res.data);
   } catch (error) {
     dispatch({
       type: types.GET_QUIZ_ERROR,
@@ -41,7 +38,6 @@ export const getQuizData = () => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };
 
@@ -61,6 +57,5 @@ export const deleteQuiz = (quizId) => async (dispatch) => {
         message: "error",
       },
     });
-    console.log(error);
   }
 };

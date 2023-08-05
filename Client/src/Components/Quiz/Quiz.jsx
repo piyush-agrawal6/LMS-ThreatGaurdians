@@ -1,16 +1,19 @@
 import React from "react";
-import "./Quiz.css";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteQuiz } from "../../Redux/quiz/action";
+import "./Quiz.css";
 
 const Quiz = ({ data }) => {
+  const dispatch = useDispatch(); 
+
   const {
     user: { userType },
   } = useSelector((store) => store.auth.data);
-  const dispatch = useDispatch();
+
   const deleteQuizFunc = (id) => {
     dispatch(deleteQuiz(id));
   };
+  
   return (
     <div className="quizDiv">
       <div>

@@ -1,33 +1,36 @@
 import React, { useEffect, useState } from "react";
-import "./Tutor.css";
-import Navbar from "../../Components/Sidebar/Navbar";
-import AddIcon from "../../Components/AddIcon/AddIcon";
-import {
-  Button,
-  Drawer,
-  Space,
-  Spin,
-  message,
-} from "antd";
-import Header from "../../Components/Header/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  getTutorData,
-  tutorRegister,
-} from "../../Redux/tutor/action";
+import { getTutorData, tutorRegister } from "../../Redux/tutor/action";
+
+//component imports
+import Navbar from "../../Components/Sidebar/Navbar";
+import Header from "../../Components/Header/Header";
+import AddIcon from "../../Components/AddIcon/AddIcon";
 import TutorRow from "../../Components/Table/TutorRow";
+
+//css imports
+import { Button, Drawer, Space, Spin, message } from "antd";
+import "./Tutor.css";
+
 const Tutor = () => {
-  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //redux states
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
-  const navigate = useNavigate();
   const { tutors, load } = useSelector((store) => store.tutor);
+
+  //loading state
   const [loading, setLoading] = useState(false);
+
+  //alert api antd
   const [messageApi, contextHolder] = message.useMessage();
 
+  //drawer states
+  const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -35,6 +38,7 @@ const Tutor = () => {
     setOpen(false);
   };
 
+  //form states
   const initialFormData = {
     name: "",
     email: "",
@@ -45,6 +49,7 @@ const Tutor = () => {
   const handleInputChange = (e) => {
     setFormData({ ...FormData, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (FormData.subject == "") {
@@ -122,7 +127,7 @@ const Tutor = () => {
               </thead>
               <tbody>
                 {tutors?.map((data, i) => {
-                  return <TutorRow data={data} key={i}/>;
+                  return <TutorRow data={data} key={i} />;
                 })}
               </tbody>
             </table>

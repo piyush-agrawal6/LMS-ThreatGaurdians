@@ -1,10 +1,13 @@
 const express = require("express");
-const { TutorModel } = require("../models/Tutor.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 
+//model import
+const { TutorModel } = require("../models/Tutor.model");
+
+//get all tutor data
 router.get("/all", async (req, res) => {
   try {
     const tutors = await TutorModel.find();
@@ -14,6 +17,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
+//register new tutor
 router.post("/register", async (req, res) => {
   const { name, email, password, subject } = req.body;
   try {
@@ -71,6 +75,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+//tutor login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -104,6 +109,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//edit tutor
 router.patch("/:tutorId", async (req, res) => {
   const { tutorId } = req.params;
   const payload = req.body;
@@ -116,6 +122,7 @@ router.patch("/:tutorId", async (req, res) => {
   }
 });
 
+//delete tutor
 router.delete("/:tutorId", async (req, res) => {
   const { tutorId } = req.params;
   try {

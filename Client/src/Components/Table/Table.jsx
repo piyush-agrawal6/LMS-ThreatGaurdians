@@ -1,6 +1,6 @@
 import React from "react";
-import "./Table.css";
 import TableRow from "./TableRow";
+import "./Table.css";
 
 const Table = ({ Data }) => {
   return (

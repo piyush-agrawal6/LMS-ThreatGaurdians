@@ -1,7 +1,10 @@
 const express = require("express");
-const { ContentModel } = require("../models/content.model");
 const router = express.Router();
 
+//model import
+const { ContentModel } = require("../models/content.model");
+
+//get all content data route
 router.get("/all", async (req, res) => {
   try {
     const content = await ContentModel.find();
@@ -11,6 +14,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
+//get single data route
 router.get("/:contentId", async (req, res) => {
   const { contentId } = req.params;
   try {
@@ -21,6 +25,7 @@ router.get("/:contentId", async (req, res) => {
   }
 });
 
+//create new content route
 router.post("/create", async (req, res) => {
   try {
     const content = new ContentModel(req.body);
@@ -31,6 +36,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
+// edit content route
 router.patch("/:contentId", async (req, res) => {
   const { contentId } = req.params;
   const payload = req.body;
@@ -48,6 +54,7 @@ router.patch("/:contentId", async (req, res) => {
   }
 });
 
+//delete content route
 router.delete("/:contentId", async (req, res) => {
   const { contentId } = req.params;
   try {

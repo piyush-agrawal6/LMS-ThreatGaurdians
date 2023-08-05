@@ -1,10 +1,13 @@
 const express = require("express");
-const { StudentModel } = require("../models/student.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 
+//model import
+const { StudentModel } = require("../models/student.model");
+
+//gel all students data
 router.get("/all", async (req, res) => {
   try {
     const students = await StudentModel.find();
@@ -14,6 +17,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
+// register new students
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -71,6 +75,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+//student login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
@@ -104,6 +109,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//edit student
 router.patch("/:studentId", async (req, res) => {
   const { studentId } = req.params;
   const payload = req.body;
@@ -119,6 +125,7 @@ router.patch("/:studentId", async (req, res) => {
   }
 });
 
+//delete student
 router.delete("/:studentId", async (req, res) => {
   const { studentId } = req.params;
   try {

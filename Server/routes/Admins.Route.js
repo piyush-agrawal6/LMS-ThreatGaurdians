@@ -1,10 +1,20 @@
 const express = require("express");
-const { AdminModel } = require("../models/admin.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const nodemailer = require("nodemailer");
 
+//model import
+const { AdminModel } = require("../models/admin.model");
+
+//middleware import
+const {
+  isAuthenticated,
+  isAdminAuthenticated,
+  isTutorAuthenticated,
+} = require("../middlewares/authenticate");
+
+//get all admin data route
 router.get("/all", async (req, res) => {
   try {
     const admins = await AdminModel.find();
@@ -14,6 +24,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
+//admin registration route
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try {
@@ -70,6 +81,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
+//admin login route
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -102,6 +114,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//edit admin route
 router.patch("/:adminId", async (req, res) => {
   const { adminId } = req.params;
   const payload = req.body;
@@ -114,6 +127,7 @@ router.patch("/:adminId", async (req, res) => {
   }
 });
 
+//delete admin route
 router.delete("/:adminId", async (req, res) => {
   const { adminId } = req.params;
   try {
