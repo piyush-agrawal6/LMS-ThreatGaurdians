@@ -32,8 +32,9 @@ const Content = () => {
     class: "",
     subject: "",
     type: "",
-    creator: user.name,
+    creator: user?.name,
   };
+
   const [formData, setFormData] = useState(initialFormData);
   const [loading, setLoading] = useState(false);
 

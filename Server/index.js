@@ -12,6 +12,7 @@ const studentRouter = require("./routes/Student.Route");
 const tutorRouter = require("./routes/Tutor.Route");
 const quizRouter = require("./routes/Quiz.Route");
 const contentRouter = require("./routes/Content.Route");
+const DoubtRouter = require("./routes/Doubt.Route");
 
 app.use(express.text());
 app.use(express.json());
@@ -26,6 +27,7 @@ app.use("/tutor", tutorRouter);
 app.use("/student", studentRouter);
 app.use("/quiz", quizRouter);
 app.use("/content", contentRouter);
+app.use("/doubt", DoubtRouter);
 
 app.listen(PORT, async () => {
   try {

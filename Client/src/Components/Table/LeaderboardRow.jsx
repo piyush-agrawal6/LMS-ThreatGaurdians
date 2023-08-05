@@ -1,8 +1,6 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 
 const LeaderboardRow = ({ data }) => {
-  const dispatch = useDispatch();
 
   return (
     <tr className="tableRow">

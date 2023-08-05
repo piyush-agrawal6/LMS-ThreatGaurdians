@@ -18,7 +18,6 @@ const SingleContent = () => {
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(getSingleContentData(params.id));
@@ -68,7 +67,7 @@ const SingleContent = () => {
           <p>Class : {singleContent?.class}</p>
           <p>Subject : {singleContent?.subject}</p>
           <p>Content Type : {singleContent?.type}</p>
-          <p>Tutor : {singleContent?.type}</p>
+          <p>Tutor : {singleContent?.creator}</p>
         </div>
       </div>
     </Navbar>

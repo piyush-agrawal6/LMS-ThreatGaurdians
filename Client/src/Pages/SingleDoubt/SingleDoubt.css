@@ -1,0 +1,11 @@
+.doubtResponses {
+  margin: 10px 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: rgba(178, 181, 184, 0.2) 0px 8px 24px;
+}
+.responseForm {
+  display: flex;
+  gap: 10px;
+}

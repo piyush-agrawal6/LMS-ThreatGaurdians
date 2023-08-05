@@ -1,16 +1,53 @@
-.doubts {
+.content {
   width: 100%;
   height: calc(100vh - 75px);
   overflow-y: auto;
   background-color: var(--light);
 }
-.doubts::-webkit-scrollbar {
+.content::-webkit-scrollbar {
   display: none;
 }
-.doubtsData {
-  margin: 25px 20px;
+.content > h3 {
+  text-align: center;
+  margin: 15px 0;
+}
+.contentData {
+  margin: 5px 20px;
   padding: 20px;
   background: white;
   border-radius: 15px;
   box-shadow: rgba(178, 181, 184, 0.2) 0px 8px 24px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.uploadBtn {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(168, 98, 233);
+  color: white;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.submitBtn {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  background-color: rgb(54, 141, 248);
+  color: white;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.uploadedImgDiv {
+  border: 1px solid gray;
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
 }

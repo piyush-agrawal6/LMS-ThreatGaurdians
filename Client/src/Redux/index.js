@@ -5,6 +5,7 @@ import tutorReducer from "./tutor/reducer";
 import studentReducer from "./student/reducer";
 import quizReducer from "./quiz/reducer";
 import contentReducer from "./content/reducer";
+import doubtReducer from "./doubt/reducer";
 
 export const rootReducer = combineReducers({
   auth: authReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   student: studentReducer,
   quiz: quizReducer,
   content: contentReducer,
+  doubt: doubtReducer,
 });

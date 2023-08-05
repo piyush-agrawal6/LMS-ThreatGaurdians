@@ -7,11 +7,7 @@ import logo from "../../Assets/logo2.png";
 
 // Icon imports
 import { BiLogOut, BiUserVoice } from "react-icons/bi";
-import {
-  TbLayoutGridAdd,
-  TbUsers,
-  TbBrandSpeedtest,
-} from "react-icons/tb";
+import { TbLayoutGridAdd, TbUsers, TbBrandSpeedtest } from "react-icons/tb";
 import { LuLayoutGrid } from "react-icons/lu";
 import { PiStudentDuotone } from "react-icons/pi";
 import { HiOutlineHome } from "react-icons/hi";
@@ -139,7 +135,7 @@ const Navbar = ({ children }) => {
                 );
               })
             : ""}
-          {userType == "Student" && !premium ? (
+          {userType == "Student" && premium == "false" ? (
             <Menu
               Icon={<MdOutlineWorkspacePremium />}
               Title={"Premium"}
@@ -163,7 +159,7 @@ const Navbar = ({ children }) => {
               onClick={() => setToggle(!toggle)}
             />
             {userType == "Student" ? (
-              !premium ? (
+              premium == "false" ? (
                 <Link href="/" className="nav-link">
                   🔥 Access all features with premium ! <span>Buy now !</span>
                 </Link>

@@ -8,7 +8,7 @@
   display: none;
 }
 .singleContentData {
-  margin: 25px 20px;
+  margin: 15px 20px;
   padding: 20px;
   background: white;
   border-radius: 15px;
@@ -35,4 +35,9 @@
   background: white;
   border-radius: 15px;
   box-shadow: rgba(178, 181, 184, 0.2) 0px 8px 24px;
+}
+@media screen and (max-width: 600px) {
+  .fileContainer img {
+    height: auto;
+  }
 }
