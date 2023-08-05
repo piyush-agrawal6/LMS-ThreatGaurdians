@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // Image imports
 import user from "../../Assets/useravatar.png";
-import logo from "../../Assets/logo1.png";
+import logo from "../../Assets/logo2.png";
 
 // Icon imports
 import { BiLogOut, BiUserVoice } from "react-icons/bi";
 import {
   TbLayoutGridAdd,
-  TbMessages,
   TbUsers,
   TbBrandSpeedtest,
 } from "react-icons/tb";
@@ -57,7 +56,7 @@ const Navbar = ({ children }) => {
     { icon: <TbBrandSpeedtest />, title: "Quizzes", address: "/quizzes" },
     { icon: <TbLayoutGridAdd />, title: "Contents", address: "/contents" },
     { icon: <AiOutlineQuestion />, title: "Doubts", address: "/doubts" },
-    { icon: <TbMessages />, title: "Message", address: "/messages" },
+    // { icon: <TbMessages />, title: "Message", address: "/messages" },
     { icon: <TbUsers />, title: "Leader Board", address: "/leaderboard" },
     { icon: <BsBookmarkCheck />, title: "Bookmarks", address: "/bookmarks" },
   ];
@@ -66,9 +65,9 @@ const Navbar = ({ children }) => {
     { icon: <PiStudentDuotone />, title: "Students", address: "/student" },
     { icon: <TbBrandSpeedtest />, title: "Quizzes", address: "/quizzes" },
     { icon: <TbLayoutGridAdd />, title: "Contents", address: "/contents" },
-    { icon: <AiOutlineQuestion />, title: "Doubts", address: "/doubts" },
-    { icon: <TbMessages />, title: "Message", address: "/messages" },
     { icon: <TbUsers />, title: "Leader Board", address: "/leaderboard" },
+    { icon: <AiOutlineQuestion />, title: "Doubts", address: "/doubts" },
+    // { icon: <TbMessages />, title: "Message", address: "/messages" },
   ];
 
   // Dropdown menu

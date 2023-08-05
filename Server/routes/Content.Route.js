@@ -11,6 +11,16 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.get("/:contentId", async (req, res) => {
+  const { contentId } = req.params;
+  try {
+    const content = await ContentModel.find({ _id: contentId });
+    res.send({ msg: "Single content data", content: content[0] });
+  } catch (error) {
+    res.status(400).send({ msg: "Something went wrong" });
+  }
+});
+
 router.post("/create", async (req, res) => {
   try {
     const content = new ContentModel(req.body);

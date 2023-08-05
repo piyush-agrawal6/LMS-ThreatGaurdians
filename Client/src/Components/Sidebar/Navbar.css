@@ -22,7 +22,7 @@
 #sidebar .logo {
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 22px  12px;
   box-shadow: rgba(151, 170, 210, 0.2) 0px 7px 29px 0px;
 }
 #sidebar .logo img {
