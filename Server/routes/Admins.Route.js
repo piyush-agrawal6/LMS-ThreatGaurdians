@@ -9,9 +9,7 @@ const { AdminModel } = require("../models/admin.model");
 
 //middleware import
 const {
-  isAuthenticated,
   isAdminAuthenticated,
-  isTutorAuthenticated,
 } = require("../middlewares/authenticate");
 
 //get all admin data route
@@ -25,8 +23,8 @@ router.get("/all", async (req, res) => {
 });
 
 //admin registration route
-router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+router.post("/register", isAdminAuthenticated, async (req, res) => {
+  const { name, email, password } = req.body.data;
   try {
     let user = await AdminModel.find({ email });
     if (user.length > 0) {
@@ -115,9 +113,9 @@ router.post("/login", async (req, res) => {
 });
 
 //edit admin route
-router.patch("/:adminId", async (req, res) => {
+router.patch("/:adminId", isAdminAuthenticated, async (req, res) => {
   const { adminId } = req.params;
-  const payload = req.body;
+  const payload = req.body.data;
   try {
     const admin = await AdminModel.findByIdAndUpdate({ _id: adminId }, payload);
     const updatedAdmin = await AdminModel.find({ _id: adminId });

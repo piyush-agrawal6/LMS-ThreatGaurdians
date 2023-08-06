@@ -37,11 +37,7 @@ const Admin = () => {
 
   //redux states
   const {
-    data: {
-      isAuthenticated,
-      token,
-      user: { userType },
-    },
+    data: { isAuthenticated },
   } = useSelector((store) => store.auth);
   const { admins, load } = useSelector((store) => store.admin);
 
@@ -103,7 +99,7 @@ const Admin = () => {
   };
 
   useEffect(() => {
-    dispatch(getAdminData(token, userType));
+    dispatch(getAdminData());
   }, []);
 
   useEffect(() => {

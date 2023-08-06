@@ -2,11 +2,14 @@ import * as types from "./types";
 import axios from "axios";
 import url from "../../BackendURL.js";
 
+let token = localStorage.getItem("token");
+console.log(token);
+
 //register admin
 export const adminRegister = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.REGISTER_ADMIN_REQUEST });
-    const res = await axios.post(`${url}/admin/register`, data);
+    const res = await axios.post(`${url}/admin/register`, { data, token });
     if (res.data.admin) {
       dispatch({
         type: types.REGISTER_ADMIN_SUCCESS,
@@ -28,12 +31,9 @@ export const adminRegister = (data) => async (dispatch) => {
 export const getAdminData = (token, role) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_ADMIN_REQUEST });
-    const res = await axios.get(
-      `${url}/admin/all`,
-      {
-        headers: { token: token },
-      }
-    );
+    const res = await axios.get(`${url}/admin/all`, {
+      headers: { token: token },
+    });
     dispatch({
       type: types.GET_ADMIN_SUCCESS,
       payload: { admins: res.data.admins },
@@ -71,7 +71,7 @@ export const deleteAdmin = (adminId) => async (dispatch) => {
 export const editAdmin = (adminId, data) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_ADMIN_REQUEST });
-    const res = await axios.patch(`${url}/admin/${adminId}`, data);
+    const res = await axios.patch(`${url}/admin/${adminId}`, { data, token });
     dispatch({
       type: types.EDIT_ADMIN_SUCCESS,
       payload: { id: adminId, admin: res.data.admin },

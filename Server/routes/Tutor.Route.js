@@ -7,6 +7,9 @@ const nodemailer = require("nodemailer");
 //model import
 const { TutorModel } = require("../models/Tutor.model");
 
+//middleware import
+const { isAdminAuthenticated } = require("../middlewares/authenticate");
+
 //get all tutor data
 router.get("/all", async (req, res) => {
   try {
@@ -18,8 +21,8 @@ router.get("/all", async (req, res) => {
 });
 
 //register new tutor
-router.post("/register", async (req, res) => {
-  const { name, email, password, subject } = req.body;
+router.post("/register", isAdminAuthenticated, async (req, res) => {
+  const { name, email, password, subject } = req.body.data;
   try {
     let user = await TutorModel.find({ email });
     if (user.length > 0) {
@@ -110,9 +113,9 @@ router.post("/login", async (req, res) => {
 });
 
 //edit tutor
-router.patch("/:tutorId", async (req, res) => {
+router.patch("/:tutorId", isAdminAuthenticated, async (req, res) => {
   const { tutorId } = req.params;
-  const payload = req.body;
+  const payload = req.body.data;
   try {
     const tutor = await TutorModel.findByIdAndUpdate({ _id: tutorId }, payload);
     const updatedTutor = await TutorModel.find({ _id: tutorId });

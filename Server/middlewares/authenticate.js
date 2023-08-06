@@ -1,24 +1,27 @@
-const AdminModel = require("../models/admin.model.js");
-const TutorModel = require("../models/Tutor.model.js");
+const { AdminModel } = require("../models/admin.model");
+const { TutorModel } = require("../models/Tutor.model");
 const jwt = require("jsonwebtoken");
 
 const isAdminAuthenticated = async (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.body.token;
+  if (!token) {
+    return res.status(401).send({ message: "Missing Token. Access Denied" });
+  }
   try {
-    if (token) {
-      const decodedData = jwt.verify(token, process.env.secret_key);
-      req.userEmail = decodedData.email;
+    const decodedData = jwt.verify(token, process.env.secret_key);
+    let user = await AdminModel.findOne({ email: decodedData.email });
+    if (user) {
       next();
     } else {
-      return res.status(401).send({ message: "Missing Token. Access Denied" });
+      return res.status(401).send({ message: "Invalid Token. Access Denied" });
     }
   } catch (error) {
-    return res.status(401).send({ message: "Error" });
+    return res.status(401).send({ message: error.message });
   }
 };
 
 const isTutorAuthenticated = async (req, res, next) => {
-  const token = req.headers.token;
+  const token = req.body.token;
   if (!token) {
     return res.status(401).send({ message: "Missing Token. Access Denied" });
   }
@@ -31,12 +34,12 @@ const isTutorAuthenticated = async (req, res, next) => {
       return res.status(401).send({ message: "Invalid Token. Access Denied" });
     }
   } catch (error) {
-    return res.status(401).send({ error: error.message });
+    return res.status(401).send({ message: "Error" });
   }
 };
 
 const isAuthenticated = async (req, res, next) => {
-  const token = req.headers.token;
+  const token = req.body.token;
   if (!token) {
     return res.status(401).send({ message: "Missing Token. Access Denied" });
   }
@@ -50,7 +53,7 @@ const isAuthenticated = async (req, res, next) => {
       return res.status(401).send({ message: "Invalid Token. Access Denied" });
     }
   } catch (error) {
-    return res.status(401).send({ error: error.message });
+    return res.status(401).send({ message: "Error" });
   }
 };
 

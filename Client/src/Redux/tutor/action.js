@@ -2,11 +2,14 @@ import * as types from "./types";
 import axios from "axios";
 import url from "../../BackendURL.js";
 
+let token = localStorage.getItem("token");
+console.log(token);
+
 //register tutor
 export const tutorRegister = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.REGISTER_TUTOR_REQUEST });
-    const res = await axios.post(`${url}/tutor/register`, data);
+    const res = await axios.post(`${url}/tutor/register`, { data, token });
     if (res.data.tutor) {
       dispatch({
         type: types.REGISTER_TUTOR_SUCCESS,
@@ -66,7 +69,7 @@ export const deleteTutor = (tutorId) => async (dispatch) => {
 export const editTutor = (tutorId, data) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_TUTOR_REQUEST });
-    const res = await axios.patch(`${url}/tutor/${tutorId}`, data);
+    const res = await axios.patch(`${url}/tutor/${tutorId}`, { data, token });
     dispatch({
       type: types.EDIT_TUTOR_SUCCESS,
       payload: { id: tutorId, tutor: res.data.tutor },
