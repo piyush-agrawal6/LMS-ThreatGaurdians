@@ -1,19 +1,18 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getDashboardData } from "../../Redux/dashboard/action";
+
 //Component imports
 import Navbar from "../../Components/Sidebar/Navbar";
+import SalesDiv from "../../Components/SalesDiv/SalesDiv";
+import Header from "../../Components/Header/Header";
 
 // Icons import
 import { PiKeyReturnThin, PiCurrencyCircleDollarLight } from "react-icons/pi";
-import { FiShoppingCart, FiUserPlus, FiUserMinus } from "react-icons/fi";
+import { FiShoppingCart } from "react-icons/fi";
 import { LiaHandHoldingUsdSolid } from "react-icons/lia";
-import {
-  BsTruck,
-  BsClipboardMinus,
-  BsDownload,
-  BsArrowUpLeft,
-  BsArrowDownRight,
-} from "react-icons/bs";
+import { BsTruck, BsClipboardMinus, BsDownload } from "react-icons/bs";
 import { AiOutlineTag, AiOutlineLineChart } from "react-icons/ai";
 import {
   BarChart,
@@ -24,46 +23,67 @@ import {
   ResponsiveContainer,
   PieChart,
   Pie,
-  LineChart,
-  Line,
   Cell,
 } from "recharts";
-import { AntDesignOutlined, UserOutlined } from "@ant-design/icons";
 
 //CSS imports
-import {
-  VerticalTimeline,
-  VerticalTimelineElement,
-} from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import { Avatar, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import "./Home.css";
 
 //Image imports
 import demo from "../../Assets/cartoon.svg";
 
 //Data imports
-import { barData, lineData, pieData, COLORS } from "../../data.js";
-import FloatDiv from "../../Components/FloatDiv/FloatDiv";
-import SalesDiv from "../../Components/SalesDiv/SalesDiv";
-import { Navigate, useNavigate } from "react-router-dom";
-import Header from "../../Components/Header/Header";
+import { barData, pieData, COLORS } from "../../data.js";
 
 const Home = () => {
-  const overviewData = [
-    { icon: <FiShoppingCart />, title: "Purchase", number: "10,000" },
-    { icon: <PiKeyReturnThin />, title: "Sales return", number: "7,000" },
-    { icon: <BsTruck />, title: "Orders", number: "180k" },
-    { icon: <AiOutlineTag />, title: "sales", number: "4,200" },
-    { icon: <BsClipboardMinus />, title: "Purchase rate", number: "5,700" },
-    { icon: <AiOutlineLineChart />, title: "Profit", number: "690k" },
-  ];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     data: { isAuthenticated },
   } = useSelector((store) => store.auth);
 
-  const navigate = useNavigate();
+  const { dashboard } = useSelector((store) => store.dashboard);
+
+  //overview data
+  const overviewData = [
+    {
+      icon: <FiShoppingCart />,
+      title: "Admins",
+      number: dashboard?.admins?.length || 0,
+    },
+    {
+      icon: <PiKeyReturnThin />,
+      title: "Tutors",
+      number: dashboard?.tutors?.length || 0,
+    },
+    {
+      icon: <BsTruck />,
+      title: "Student",
+      number: dashboard?.students?.length || 0,
+    },
+    {
+      icon: <AiOutlineTag />,
+      title: "Contents",
+      number: dashboard?.contents?.length || 0,
+    },
+    {
+      icon: <BsClipboardMinus />,
+      title: "Quizzes",
+      number: dashboard?.quizzes?.length || 0,
+    },
+    {
+      icon: <AiOutlineLineChart />,
+      title: "Doubts",
+      number: dashboard?.doubts?.length || 0,
+    },
+  ];
+
+  useEffect(() => {
+    dispatch(getDashboardData());
+  }, []);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -75,9 +95,6 @@ const Home = () => {
     <div>
       <Navbar>
         <div className="main">
-          {/* float toottip */}
-          <FloatDiv />
-
           {/* Header */}
           <Header Title={"Overview"} Address={"Default"} />
 
@@ -106,7 +123,7 @@ const Home = () => {
           <div className="charts">
             <div className="lineChart">
               <div className="chartHead">
-                <p>Overall Balance</p>
+                <p>Premium Balance</p>
               </div>
               <div className="chartBox">
                 <div className="chartOne">
@@ -153,7 +170,7 @@ const Home = () => {
             </div>
             <div className="pieChart">
               <div className="chartHead">
-                <p>Recent Orders</p>
+                <p>Occupancy</p>
               </div>
               <div className="pieBox">
                 <ResponsiveContainer>

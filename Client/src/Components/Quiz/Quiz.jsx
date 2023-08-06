@@ -4,7 +4,7 @@ import { deleteQuiz } from "../../Redux/quiz/action";
 import "./Quiz.css";
 
 const Quiz = ({ data }) => {
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
 
   const {
     user: { userType },
@@ -13,7 +13,7 @@ const Quiz = ({ data }) => {
   const deleteQuizFunc = (id) => {
     dispatch(deleteQuiz(id));
   };
-  
+
   return (
     <div className="quizDiv">
       <div>
@@ -29,8 +29,11 @@ const Quiz = ({ data }) => {
         <div>
           <p className="quizPoint">Questions : {data.noOfQuestions}</p>
           <p className="quizPoint">Points : {data.totalPoint}</p>
-          {userType == "admin" || "tutor" ? (
-            <button className="deleteQuiz" onClick={() => deleteQuizFunc(data._id)}>
+          {userType == "Admin" || userType == "Tutor" ? (
+            <button
+              className="deleteQuiz"
+              onClick={() => deleteQuizFunc(data._id)}
+            >
               Delete Quiz
             </button>
           ) : (

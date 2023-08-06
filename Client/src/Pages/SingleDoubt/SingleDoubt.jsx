@@ -73,7 +73,7 @@ const SingleDoubt = () => {
         <div className="doubtResponses">
           <h3>Responses</h3>
         </div>
-        {singleDoubt?.response.map((data, i) => {
+        {singleDoubt?.response?.map((data, i) => {
           return (
             <div key={i} className="doubtResponses">
               <p>Response no. : {i + 1}</p>

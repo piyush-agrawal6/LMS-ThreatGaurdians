@@ -17,7 +17,7 @@ const ContentBox = ({ data }) => {
   const handleClick = (id) => {
     return navigate(`/content/${id}`);
   };
-  
+
   return (
     <div className="contentDiv">
       <div>
@@ -30,7 +30,7 @@ const ContentBox = ({ data }) => {
           <p>Class {data.class}</p>
         </div>
         <div>
-          {user.userType == "admin" || "tutor" ? (
+          {user.userType == "Admin" || user.userType == "Tutor" ? (
             <div className="contentOption">
               <p>{data.type}</p>
               <button onClick={() => handleClick(data._id)}>Check</button>
