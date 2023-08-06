@@ -17,6 +17,7 @@ const tutorRouter = require("./routes/Tutor.Route");
 const quizRouter = require("./routes/Quiz.Route");
 const contentRouter = require("./routes/Content.Route");
 const DoubtRouter = require("./routes/Doubt.Route");
+const DashboardRouter = require("./routes/Dashboard.Route");
 
 app.use(express.text());
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use("/student", studentRouter);
 app.use("/quiz", quizRouter);
 app.use("/content", contentRouter);
 app.use("/doubt", DoubtRouter);
+app.use("/dashboard", DashboardRouter);
 
 //app listening
 app.listen(PORT, async () => {
