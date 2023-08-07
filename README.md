@@ -60,6 +60,11 @@ Salt_rounds = 5
 - Live - https://lms-threatgaurdians.netlify.app/home
 - Server - https://lmsbackend-020w.onrender.com/
 
+## 🔗 Credentials
+
+- Email - test@gmail.com
+- Password - test
+
 
 ## Features Completed
 
