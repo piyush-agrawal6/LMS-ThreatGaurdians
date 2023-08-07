@@ -2,11 +2,13 @@ import * as types from "./types";
 import axios from "axios";
 import url from "../../BackendURL.js";
 
+let token = localStorage.getItem("token");
+
 //register student
 export const studentRegister = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.REGISTER_STUDENT_REQUEST });
-    const res = await axios.post(`${url}/student/register`, data);
+    const res = await axios.post(`${url}/student/register`, { data, token });
     if (res.data.student) {
       dispatch({
         type: types.REGISTER_STUDENT_SUCCESS,
@@ -66,7 +68,10 @@ export const deleteStudent = (studentId) => async (dispatch) => {
 export const editStudent = (studentId, data) => async (dispatch) => {
   try {
     dispatch({ type: types.EDIT_STUDENT_REQUEST });
-    const res = await axios.patch(`${url}/student/${studentId}`, data);
+    const res = await axios.patch(`${url}/student/${studentId}`, {
+      data,
+      token,
+    });
     dispatch({
       type: types.EDIT_STUDENT_SUCCESS,
       payload: { id: studentId, student: res.data.student },

@@ -2,11 +2,13 @@ import * as types from "./types";
 import axios from "axios";
 import url from "../../BackendURL.js";
 
+let token = localStorage.getItem("token");
+
 //create quiz
 export const createQuiz = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_QUIZ_REQUEST });
-    const res = await axios.post(`${url}/quiz/create`, data);
+    const res = await axios.post(`${url}/quiz/create`, { data, token });
     dispatch({
       type: types.CREATE_QUIZ_SUCCESS,
       payload: { quiz: res.data.quiz },

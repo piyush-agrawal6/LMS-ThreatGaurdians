@@ -7,6 +7,9 @@ const nodemailer = require("nodemailer");
 //model import
 const { StudentModel } = require("../models/student.model");
 
+//middleware import
+const { isAuthenticated } = require("../middlewares/authenticate");
+
 //gel all students data
 router.get("/all", async (req, res) => {
   try {
@@ -18,8 +21,8 @@ router.get("/all", async (req, res) => {
 });
 
 // register new students
-router.post("/register", async (req, res) => {
-  const { name, email, password } = req.body;
+router.post("/register", isAuthenticated, async (req, res) => {
+  const { name, email, password } = req.body.data;
   try {
     let user = await StudentModel.find({ email });
     if (user.length > 0) {
@@ -35,7 +38,7 @@ router.post("/register", async (req, res) => {
           const student = new StudentModel({
             name,
             email,
-            class: req.body.class,
+            class: req.body.data.class,
             password: secure_password,
           });
           await student.save();
@@ -110,16 +113,18 @@ router.post("/login", async (req, res) => {
 });
 
 //edit student
-router.patch("/:studentId", async (req, res) => {
+router.patch("/:studentId", isAuthenticated, async (req, res) => {
   const { studentId } = req.params;
-  const payload = req.body;
+  const payload = req.body.data;
   try {
     const student = await StudentModel.findByIdAndUpdate(
       { _id: studentId },
       payload
     );
     const updatedStudent = await StudentModel.find({ _id: studentId });
-    res.status(200).send({ msg: "Updated Student", student: updatedStudent[0] });
+    res
+      .status(200)
+      .send({ msg: "Updated Student", student: updatedStudent[0] });
   } catch (error) {
     res.status(404).send({ msg: "Error" });
   }

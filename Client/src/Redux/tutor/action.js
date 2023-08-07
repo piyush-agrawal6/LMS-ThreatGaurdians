@@ -3,7 +3,6 @@ import axios from "axios";
 import url from "../../BackendURL.js";
 
 let token = localStorage.getItem("token");
-console.log(token);
 
 //register tutor
 export const tutorRegister = (data) => async (dispatch) => {

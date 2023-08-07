@@ -2,11 +2,12 @@ import * as types from "./types";
 import axios from "axios";
 import url from "../../BackendURL.js";
 
+let token = localStorage.getItem("token");
 //create content
 export const createContent = (data) => async (dispatch) => {
   try {
     dispatch({ type: types.CREATE_CONTENT_REQUEST });
-    const res = await axios.post(`${url}/content/create`, data);
+    const res = await axios.post(`${url}/content/create`, { data, token });
     dispatch({
       type: types.CREATE_CONTENT_SUCCESS,
       payload: { content: res.data.content },

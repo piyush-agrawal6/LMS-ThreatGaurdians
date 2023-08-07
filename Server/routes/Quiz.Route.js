@@ -4,6 +4,9 @@ const router = express.Router();
 //model import
 const { QuizModel } = require("../models/quiz.model");
 
+//middleware import
+const { isAuthenticated } = require("../middlewares/authenticate");
+
 //get all quiz data
 router.get("/all", async (req, res) => {
   try {
@@ -15,9 +18,9 @@ router.get("/all", async (req, res) => {
 });
 
 //create new quiz
-router.post("/create", async (req, res) => {
+router.post("/create", isAuthenticated, async (req, res) => {
   try {
-    const quiz = new QuizModel(req.body);
+    const quiz = new QuizModel(req.body.data);
     await quiz.save();
     return res.send({ msg: "Quiz Created", quiz });
   } catch (error) {
@@ -26,9 +29,9 @@ router.post("/create", async (req, res) => {
 });
 
 //edit quiz
-router.patch("/:quizId", async (req, res) => {
+router.patch("/:quizId", isAuthenticated, async (req, res) => {
   const { quizId } = req.params;
-  const payload = req.body;
+  const payload = req.body.data;
   try {
     const quiz = await QuizModel.findByIdAndUpdate({ _id: quizId }, payload);
     const updatedQuiz = await QuizModel.find({ _id: quizId });

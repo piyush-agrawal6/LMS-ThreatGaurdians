@@ -27,14 +27,14 @@ const isTutorAuthenticated = async (req, res, next) => {
   }
   try {
     const decodedData = jwt.verify(token, process.env.secret_key);
-    let user = await TutorModel.findById(decodedData.email);
-    if (user) {
+    let tutor = await TutorModel.findOne({ email: decodedData.email });
+    if (tutor) {
       next();
     } else {
       return res.status(401).send({ message: "Invalid Token. Access Denied" });
     }
   } catch (error) {
-    return res.status(401).send({ message: "Error" });
+    return res.status(401).send({ message: error.message });
   }
 };
 
@@ -45,15 +45,15 @@ const isAuthenticated = async (req, res, next) => {
   }
   try {
     const decodedData = jwt.verify(token, process.env.secret_key);
-    let admin = await AdminModel.findById(decodedData.email);
-    let tutor = await TutorModel.findById(decodedData.email);
+    let admin = await AdminModel.findOne({ email: decodedData.email });
+    let tutor = await TutorModel.findOne({ email: decodedData.email });
     if (admin || tutor) {
       next();
     } else {
       return res.status(401).send({ message: "Invalid Token. Access Denied" });
     }
   } catch (error) {
-    return res.status(401).send({ message: "Error" });
+    return res.status(401).send({ message: error.message });
   }
 };
 

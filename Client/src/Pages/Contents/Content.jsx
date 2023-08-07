@@ -145,9 +145,7 @@ const Content = () => {
             return <ContentBox data={data} key={i} />;
           })}
         </div>
-
-        {/* drawer component  */}
-        {user.userType !== "Student" ? (
+        {user?.userType !== "Student" ? (
           <div onClick={showDrawer}>
             <AddIcon />
           </div>

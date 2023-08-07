@@ -4,6 +4,9 @@ const router = express.Router();
 //model import
 const { ContentModel } = require("../models/content.model");
 
+//middleware import
+const { isAuthenticated } = require("../middlewares/authenticate");
+
 //get all content data route
 router.get("/all", async (req, res) => {
   try {
@@ -26,9 +29,9 @@ router.get("/:contentId", async (req, res) => {
 });
 
 //create new content route
-router.post("/create", async (req, res) => {
+router.post("/create", isAuthenticated, async (req, res) => {
   try {
-    const content = new ContentModel(req.body);
+    const content = new ContentModel(req.body.data);
     await content.save();
     return res.send({ msg: "Content Created", content });
   } catch (error) {
@@ -37,9 +40,9 @@ router.post("/create", async (req, res) => {
 });
 
 // edit content route
-router.patch("/:contentId", async (req, res) => {
+router.patch("/:contentId", isAuthenticated, async (req, res) => {
   const { contentId } = req.params;
-  const payload = req.body;
+  const payload = req.body.data;
   try {
     const content = await ContentModel.findByIdAndUpdate(
       { _id: contentId },
